@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Musfiah Center - Perkembangan Teknologi Komunikasi</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts Inter -->
+    <!-- Google Fonts Inter & Merriweather -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -19,6 +19,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
                     },
                     colors: {
                         brand: {
@@ -38,8 +39,47 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f6f9;
+            background-color: #f8fafc;
         }
+        .article-body {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.0625rem; /* 17px large readable news font */
+            line-height: 1.85;
+            color: #334155;
+        }
+        .article-body p {
+            margin-bottom: 1.35rem;
+        }
+        .drop-cap::first-letter {
+            font-size: 3.5rem;
+            font-weight: 800;
+            float: left;
+            line-height: 0.8;
+            margin-right: 0.65rem;
+            color: #0284c7;
+            font-family: 'Merriweather', serif;
+        }
+        
+        /* Sidebar Expanded vs Collapsed States */
+        .sidebar-expanded {
+            width: 16rem; /* 256px */
+        }
+        .sidebar-collapsed {
+            width: 4.5rem; /* 72px Mini Sidebar */
+        }
+        .sidebar-collapsed .sidebar-text {
+            display: none !important;
+        }
+        .sidebar-collapsed .sidebar-item-center {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        .sidebar-collapsed .sidebar-header-box {
+            justify-content: center !important;
+            padding: 0 !important;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
@@ -57,166 +97,185 @@
         }
     </style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-sky-500 selection:text-white min-h-screen">
+<body class="text-slate-800 antialiased selection:bg-sky-500 selection:text-white min-h-screen flex flex-col bg-slate-50">
 
-    <!-- App Wrapper (2-Column Layout) -->
-    <div class="min-h-screen flex flex-col md:flex-row max-w-[1600px] mx-auto bg-[#f3f6f9]">
-        
-        <!-- ================= LEFT SIDEBAR ================= -->
-        <aside id="sidebar" class="w-full md:w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between p-5 z-30 transition-all duration-300 md:min-h-screen">
-            <div>
-                <!-- Brand Header -->
-                <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-sky-500/30">
-                            <i class="fa-solid fa-graduation-cap text-lg"></i>
-                        </div>
-                        <div>
-                            <h1 class="font-bold text-slate-900 text-lg leading-tight">Musfiah Center</h1>
-                            <p class="text-[11px] text-slate-400 font-medium">Portal Materi Kuliah</p>
-                        </div>
+    <!-- Top Floating Header Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-[1700px] mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Toggle Sidebar Button -->
+                <button onclick="toggleSidebar()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-sky-50 hover:text-sky-600 text-slate-700 transition duration-200 flex items-center gap-2 font-semibold text-xs border border-slate-200" title="Toggle Mini / Full Sidebar">
+                    <i id="toggle-icon" class="fa-solid fa-angles-left text-base transition-transform duration-300"></i>
+                    <span class="hidden sm:inline" id="toggle-text">Ciutkan</span>
+                </button>
+
+                <!-- Brand Title -->
+                <div onclick="navigateTo('dashboard')" class="cursor-pointer flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-600 to-blue-700 flex items-center justify-center text-white font-extrabold text-base shadow-sm">
+                        MC
                     </div>
-                    <!-- Mobile Menu Toggle -->
-                    <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 p-2">
-                        <i class="fa-solid fa-bars text-lg"></i>
-                    </button>
+                    <div>
+                        <h1 class="font-extrabold text-slate-900 text-base leading-none">Musfiah Center</h1>
+                        <p class="text-[10px] text-sky-600 font-bold uppercase tracking-wider mt-0.5">Portal Perkuliahan</p>
+                    </div>
                 </div>
-
-                <!-- Navigation Links -->
-                <nav class="space-y-2" id="nav-container">
-                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 bg-sky-50 text-sky-600">
-                        <i class="fa-solid fa-house w-5 text-center text-base"></i>
-                        <span>Dashboard</span>
-                    </button>
-
-                    <button onclick="navigateTo('matakuliah')" id="nav-matakuliah" class="nav-item w-full flex items-center justify-between px-4 py-3 rounded-2xl font-semibold text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-book-open-reader w-5 text-center text-base"></i>
-                            <span>Mata Kuliah</span>
-                        </div>
-                        <span class="text-[10px] bg-sky-100 text-sky-700 font-bold px-2 py-0.5 rounded-full">1 Matkul</span>
-                    </button>
-
-                    <button onclick="navigateTo('kuis-direct')" id="nav-kuis" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                        <i class="fa-solid fa-list-check w-5 text-center text-base"></i>
-                        <span>Kuis Interaktif</span>
-                    </button>
-
-                    <button onclick="navigateTo('uts-direct')" id="nav-uts" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                        <i class="fa-solid fa-file-pen w-5 text-center text-base text-amber-500"></i>
-                        <span>Info UTS Paper</span>
-                    </button>
-                </nav>
             </div>
 
-            <!-- Footer Lecturer Info -->
-            <div class="pt-6 border-t border-slate-100 mt-6 space-y-3">
-                <div class="bg-slate-50 rounded-2xl p-3.5 border border-slate-100">
-                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Dosen Pengampu</p>
-                    <p class="text-xs font-bold text-slate-800 mt-0.5">Musfiah Saidah, M.Si</p>
-                    <p class="text-[11px] text-sky-600 font-medium">musfiah.saidah@uinjkt.ac.id</p>
+            <div class="flex items-center gap-3">
+                <span class="hidden md:inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Gasal 2026/2027
+                </span>
+                <button onclick="openCourseDetail('materi')" class="bg-sky-600 hover:bg-sky-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm transition flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Masuk Kelas PTK</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Wrapper with Mini Collapsible Sidebar -->
+    <div class="flex-1 flex max-w-[1700px] w-full mx-auto relative overflow-hidden">
+        
+        <!-- ================= SIDEBAR NAVIGASI (EXPANDED / MINI) ================= -->
+        <aside id="sidebar" class="sidebar-expanded bg-white border-r border-slate-200/80 flex flex-col justify-between p-3.5 z-30 transition-all duration-300 shrink-0 min-h-[calc(100vh-61px)]">
+            <div class="space-y-5">
+                <!-- Mini Brand Badge Header -->
+                <div class="sidebar-header-box px-1 pt-1 flex items-center justify-between">
+                    <span class="sidebar-text text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Navigasi Utama</span>
+                    <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 font-black text-xs flex items-center justify-center shadow-xs mx-auto sidebar-text-icon hidden">
+                        MC
+                    </div>
                 </div>
-                <p class="text-[10px] text-slate-400 text-center">&copy; 2026 Musfiah Center</p>
+
+                <!-- Nav Buttons -->
+                <nav class="space-y-2" id="nav-container">
+                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" title="Dashboard Utama" class="nav-item sidebar-item-center w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl font-semibold text-xs sm:text-sm transition-all duration-200 bg-sky-50 text-sky-600">
+                        <i class="fa-solid fa-house text-base w-5 text-center shrink-0"></i>
+                        <span class="sidebar-text">Dashboard Utama</span>
+                    </button>
+
+                    <button onclick="navigateTo('matakuliah')" id="nav-matakuliah" title="Mata Kuliah" class="nav-item sidebar-item-center w-full flex items-center justify-between px-3.5 py-3 rounded-2xl font-semibold text-xs sm:text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-book-open-reader text-base w-5 text-center shrink-0"></i>
+                            <span class="sidebar-text">Mata Kuliah</span>
+                        </div>
+                        <span class="sidebar-text text-[10px] bg-sky-100 text-sky-700 font-bold px-2 py-0.5 rounded-full">1 Matkul</span>
+                    </button>
+
+                    <button onclick="openCourseDetail('kuis')" id="nav-kuis" title="Kuis Interaktif" class="nav-item sidebar-item-center w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl font-semibold text-xs sm:text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                        <i class="fa-solid fa-list-check text-base w-5 text-center shrink-0"></i>
+                        <span class="sidebar-text">Kuis Interaktif</span>
+                    </button>
+
+                    <button onclick="openCourseDetail('uts')" id="nav-uts" title="Info UTS Paper" class="nav-item sidebar-item-center w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl font-semibold text-xs sm:text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                        <i class="fa-solid fa-file-pen text-base w-5 text-center text-amber-500 shrink-0"></i>
+                        <span class="sidebar-text">Info UTS Paper</span>
+                    </button>
+                </nav>
+
+                <!-- Active Course Widget Card -->
+                <div class="border-t border-slate-100 pt-4 px-1 space-y-2">
+                    <span class="sidebar-text text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Mata Kuliah Aktif</span>
+                    <div onclick="openCourseDetail()" title="Perkembangan Teknologi Komunikasi" class="sidebar-item-center p-3 bg-slate-50 rounded-2xl border border-slate-200/80 cursor-pointer hover:bg-sky-50 hover:border-sky-200 transition flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-sky-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                            PTK
+                        </div>
+                        <div class="sidebar-text min-w-0">
+                            <p class="text-xs font-bold text-slate-800 truncate">Perkembangan Teknologi Komunikasi</p>
+                            <p class="text-[11px] text-sky-600 font-medium truncate">Musfiah Saidah, M.Si</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer info -->
+            <div class="pt-4 border-t border-slate-100 px-1 text-center">
+                <div class="sidebar-text">
+                    <p class="text-[11px] font-bold text-slate-700">Musfiah Center &copy; 2026</p>
+                    <p class="text-[10px] text-slate-400">Musfiah Saidah, M.Si</p>
+                </div>
+                <div class="sidebar-text-mini hidden">
+                    <span class="text-[10px] font-bold text-slate-400">© 2026</span>
+                </div>
             </div>
         </aside>
 
         <!-- ================= MAIN CONTENT AREA ================= -->
-        <main class="flex-1 flex flex-col min-w-0 bg-[#f3f6f9] p-4 sm:p-6 lg:p-8 overflow-y-auto">
+        <main class="flex-1 min-w-0 bg-slate-50 p-4 sm:p-6 lg:p-8 overflow-y-auto">
             
-            <!-- Top Search & Header Bar -->
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-                <div class="relative w-full sm:w-80">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="searchInput" onkeyup="filterCourseCards()" placeholder="Cari materi, topik, atau konsep..." 
-                           class="w-full bg-white text-slate-800 text-sm pl-11 pr-4 py-2.5 rounded-full border border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
-                </div>
-                
-                <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                    <div class="bg-white px-3.5 py-1.5 rounded-full border border-slate-200 shadow-sm flex items-center gap-2 text-xs font-semibold text-slate-600">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span>Semester Gasal 2026/2027</span>
-                    </div>
-                </div>
-            </div>
-
             <!-- ================= VIEW 1: DASHBOARD ================= -->
             <div id="view-dashboard" class="space-y-6">
-                <!-- Welcome Banner -->
-                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-sky-500 via-sky-600 to-blue-600 p-6 sm:p-8 text-white shadow-xl shadow-sky-500/20">
-                    <div class="absolute -right-10 -top-10 w-60 h-60 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-                    
-                    <div class="relative z-10 flex flex-col md:flex-row justify-between md:items-center gap-6">
-                        <div class="space-y-3 max-w-xl">
-                            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white border border-white/20">
-                                <i class="fa-solid fa-sparkles text-amber-300"></i>
-                                <span>Selamat Datang di Musfiah Center</span>
+                <!-- Portal Main News Hero Banner -->
+                <div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl">
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    <div class="relative z-10 p-6 sm:p-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div class="space-y-3 max-w-2xl">
+                            <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 border border-sky-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                                <i class="fa-solid fa-newspaper"></i> Portal Berita Kuliah
                             </div>
-                            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Portal Materi perkuliahan Interaktif</h2>
-                            <p class="text-sky-100 text-xs sm:text-sm leading-relaxed">
-                                Akses materi lengkap per pertemuan, kuis latihan interaktif, dan panduan penulisan paper UTS untuk Mata Kuliah Perkembangan Teknologi Komunikasi.
+                            <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight">
+                                Pusat Materi & Jurnal Kuliah Perkembangan Teknologi Komunikasi
+                            </h2>
+                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                                Selamat datang di portal resmi Musfiah Center. Akses materi perkuliahan 100% lengkap per pertemuan, studi kasus jurnal, kuis evaluasi interaktif, dan panduan penulisan paper UTS.
                             </p>
                         </div>
-
-                        <div>
-                            <button onclick="navigateTo('matakuliah')" class="bg-white text-sky-600 hover:bg-sky-50 font-bold px-6 py-3 rounded-2xl shadow-lg transition duration-200 flex items-center gap-2 text-sm group">
-                                <i class="fa-solid fa-book-open-reader"></i>
-                                <span>Buka Mata Kuliah</span>
-                                <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section Title -->
-                <div class="flex items-center justify-between pt-2">
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Mata Kuliah Aktif</h3>
-                        <p class="text-xs text-slate-500">Klik mata kuliah di bawah ini untuk mengakses ruang materi & kuis</p>
+                        <button onclick="openCourseDetail()" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold px-6 py-3.5 rounded-2xl shadow-lg transition duration-200 text-sm whitespace-nowrap flex items-center gap-2 group">
+                            <span>Buka Ruang Materi</span>
+                            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition"></i>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Course Cards Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Main Course Card -->
-                    <div onclick="openCourseDetail()" class="group cursor-pointer bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-                        <div>
-                            <div class="relative h-40 rounded-2xl bg-gradient-to-tr from-sky-600 to-indigo-600 overflow-hidden mb-5 p-5 flex flex-col justify-between text-white">
-                                <div class="flex justify-between items-center">
-                                    <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold">3 SKS</span>
-                                    <span class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xs">
-                                        <i class="fa-solid fa-bookmark"></i>
-                                    </span>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-sky-200 font-medium">Musfiah Saidah, M.Si</p>
-                                    <h4 class="font-extrabold text-lg leading-snug">Perkembangan Teknologi Komunikasi</h4>
-                                </div>
-                            </div>
-                            <p class="text-xs text-slate-500 leading-relaxed mb-4">
-                                Membahas pergeseran paradigma komunikasi, determinisme teknologi, SCOT, Network Society, Difusi Inovasi, hingga Cybercrime & KBGO.
-                            </p>
-                        </div>
-                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold">
-                            <span class="text-slate-500"><i class="fa-solid fa-layer-group text-sky-500 mr-1.5"></i>5 Pertemuan Modul</span>
-                            <span class="text-sky-600 group-hover:translate-x-1 transition flex items-center gap-1 font-bold">Masuk Kuliah <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
-                        </div>
-                    </div>
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-sky-600"></i>
+                        <span>Mata Kuliah Utama</span>
+                    </h3>
 
-                    <!-- Quick UTS Card -->
-                    <div onclick="navigateTo('uts-direct')" class="group cursor-pointer bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 border border-slate-700 text-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-amber-500/30">Tugas Mandiri</span>
-                                <i class="fa-solid fa-scroll text-amber-400 text-xl"></i>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- PTK Course Card -->
+                        <div onclick="openCourseDetail()" class="group cursor-pointer bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">3 SKS • Gasal 2026/2027</span>
+                                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">5 Pertemuan Ready</span>
+                                </div>
+                                <h4 class="text-xl font-extrabold text-slate-900 group-hover:text-sky-600 transition mb-2">
+                                    Perkembangan Teknologi Komunikasi
+                                </h4>
+                                <p class="text-xs text-slate-500 font-medium mb-4">Dosen Pengampu: Musfiah Saidah, M.Si</p>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-6">
+                                    Membahas lengkap pergeseran komunikasi, determinisme teknologi vs SCOT, 3 era komunikasi, Network Society Manuel Castells, Difusi Inovasi QRIS Desa Kanekes Baduy, hingga Cybercrime, CPM Petronio, dan KBGO.
+                                </p>
                             </div>
-                            <h4 class="font-extrabold text-lg leading-snug mb-2 text-amber-400">Instruksi UTS Paper Essai</h4>
-                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
-                                Ketentuan penulisan paper, 5 pilihan tema utama, struktur penulisan, dan lembar consent penggunaan AI.
-                            </p>
+                            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-sky-600">
+                                <span>Akses Modul Perkuliahan Lengkap</span>
+                                <i class="fa-solid fa-chevron-right group-hover:translate-x-1 transition"></i>
+                            </div>
                         </div>
-                        <div class="pt-4 border-t border-slate-700 flex items-center justify-between text-xs font-semibold text-amber-300">
-                            <span>Deadline: 23 Okt 2026</span>
-                            <span class="group-hover:translate-x-1 transition flex items-center gap-1">Detail UTS <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+
+                        <!-- UTS Card Direct -->
+                        <div onclick="openCourseDetail('uts')" class="group cursor-pointer bg-amber-50 rounded-3xl p-6 border border-amber-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">Tugas Mandiri</span>
+                                    <span class="text-xs font-bold text-amber-900">Deadline: 23 Okt 2026</span>
+                                </div>
+                                <h4 class="text-xl font-extrabold text-amber-950 group-hover:text-amber-700 transition mb-2">
+                                    Panduan Penulisan Paper UTS
+                                </h4>
+                                <p class="text-xs text-amber-800 font-medium mb-4">Subjek Pengumpulan: UTS_PERTEKOM_NAMA_NIM</p>
+                                <p class="text-xs text-amber-900/80 leading-relaxed mb-6">
+                                    Persyaratan penulisan essay fenomena sosial, 5 pilihan tema riset utama, komponen paper lengkap, serta aturan lembar *consent* kecerdasan buatan (AI).
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-amber-200 flex items-center justify-between text-xs font-bold text-amber-800">
+                                <span>Lihat Instruksi & 5 Tema UTS</span>
+                                <i class="fa-solid fa-chevron-right group-hover:translate-x-1 transition"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -225,80 +284,70 @@
             <!-- ================= VIEW 2: MATA KULIAH LIST ================= -->
             <div id="view-matakuliah" class="hidden space-y-6">
                 <div>
-                    <h2 class="text-2xl font-bold text-slate-900">Mata Kuliah</h2>
-                    <p class="text-xs text-slate-500">Pilih mata kuliah di bawah untuk membuka materi, kuis, dan informasi UTS</p>
+                    <h2 class="text-2xl font-extrabold text-slate-900">Daftar Mata Kuliah</h2>
+                    <p class="text-xs text-slate-500">Pilih mata kuliah untuk masuk ke ruang baca artikel materi & kuis</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="matakuliah-card-list">
-                    <!-- Course Card -->
-                    <div onclick="openCourseDetail()" class="group cursor-pointer bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-                        <div>
-                            <div class="relative h-44 rounded-2xl bg-gradient-to-tr from-sky-600 via-sky-600 to-indigo-600 overflow-hidden mb-5 p-5 flex flex-col justify-between text-white">
-                                <div class="flex justify-between items-center">
-                                    <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold">Matkul Utama</span>
-                                    <span class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xs">
-                                        <i class="fa-solid fa-graduation-cap"></i>
-                                    </span>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-sky-200 font-medium">Musfiah Saidah, M.Si</p>
-                                    <h3 class="font-extrabold text-xl leading-snug">Perkembangan Teknologi Komunikasi</h3>
-                                </div>
-                            </div>
-                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                                Kelas materi kuliah lengkap berisi 5 modul pertemuan, kuis evaluasi interaktif per pertemuan, serta panduan pengerjaan paper UTS.
-                            </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div onclick="openCourseDetail()" class="group cursor-pointer bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">Mata Kuliah Wajib</span>
+                            <span class="text-xs text-slate-400">Musfiah Saidah, M.Si</span>
                         </div>
-                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold">
-                            <span class="text-slate-500"><i class="fa-solid fa-circle-check text-emerald-500 mr-1.5"></i>5 Pertemuan Ready</span>
-                            <span class="text-sky-600 group-hover:translate-x-1 transition flex items-center gap-1 font-bold">Buka Materi <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                        <h3 class="text-xl font-extrabold text-slate-900 group-hover:text-sky-600 transition mb-2">
+                            Perkembangan Teknologi Komunikasi
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6">
+                            Website static ini menampung seluruh materi perkuliahan 5 pertemuan secara mendalam dan terstruktur lengkap tanpa ada poin yang terlewat.
+                        </p>
+                        <div class="flex items-center justify-between text-xs font-bold text-sky-600 pt-4 border-t border-slate-100">
+                            <span>Buka Perkuliahan (P1 - P5)</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ================= VIEW 3: COURSE DETAIL (MATERI, KUIS, UTS) ================= -->
+            <!-- ================= VIEW 3: COURSE DETAIL & ARTICLE PORTAL ================= -->
             <div id="view-course-detail" class="hidden space-y-6">
-                <!-- Top Navigation Breadcrumb -->
-                <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
+                
+                <!-- Navigation Bar Breadcrumb -->
+                <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
                     <button onclick="navigateTo('matakuliah')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-sky-600 transition">
                         <i class="fa-solid fa-arrow-left"></i>
-                        <span>Kembali ke Daftar Mata Kuliah</span>
+                        <span>Kembali ke Mata Kuliah</span>
                     </button>
-                    <span class="text-xs text-slate-500 font-medium bg-sky-50 text-sky-700 px-3 py-1 rounded-full font-bold">
-                        <i class="fa-solid fa-book-open mr-1"></i> Perkembangan Teknologi Komunikasi
+                    <span class="text-xs font-extrabold text-sky-800 bg-sky-50 px-3 py-1 rounded-full border border-sky-100">
+                        <i class="fa-solid fa-chalkboard-user mr-1.5"></i> Musfiah Saidah, M.Si
                     </span>
                 </div>
 
-                <!-- Course Banner -->
-                <div class="rounded-3xl p-6 sm:p-8 text-white shadow-xl bg-gradient-to-r from-sky-600 via-sky-600 to-blue-700 space-y-3">
-                    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium">
-                        <i class="fa-solid fa-chalkboard-user"></i>
-                        <span>Dosen Pengampu: Musfiah Saidah, M.Si</span>
-                    </div>
+                <!-- Main Course News Portal Banner -->
+                <div class="rounded-3xl p-6 sm:p-8 text-white bg-gradient-to-r from-sky-600 via-sky-700 to-blue-800 shadow-xl space-y-3">
+                    <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Modul Perkuliahan Static</span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Perkembangan Teknologi Komunikasi</h2>
                     <p class="text-xs sm:text-sm text-sky-100 leading-relaxed max-w-3xl">
-                        Selamat datang di modul perkuliahan static Musfiah Center. Silakan pilih tab di bawah untuk membaca rangkuman materi per pertemuan, mengerjakan kuis interaktif, atau melihat instruksi penulisan paper UTS.
+                        Disajikan dalam format artikel berita berita modern dengan tipografi besar, diagram alur SVG, tabel komparasi interaktif, dan kuis uji pemahaman.
                     </p>
                 </div>
 
-                <!-- Main Course Tab Selector -->
-                <div class="flex border-b border-slate-200 bg-white rounded-2xl p-1.5 shadow-sm">
-                    <button onclick="switchCourseTab('materi')" id="tab-btn-materi" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-sky-600 text-white shadow-md">
-                        <i class="fa-solid fa-file-lines text-base"></i>
-                        <span>Materi Perkuliahan (P1 - P5)</span>
+                <!-- Tabs Top Switcher -->
+                <div class="flex border-b border-slate-200 bg-white rounded-2xl p-1.5 shadow-xs">
+                    <button onclick="switchCourseTab('materi')" id="tab-btn-materi" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-sky-600 text-white shadow-sm">
+                        <i class="fa-solid fa-newspaper text-base"></i>
+                        <span>Materi Artikel (P1 - P5)</span>
                     </button>
                     <button onclick="switchCourseTab('kuis')" id="tab-btn-kuis" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-sky-600 hover:bg-slate-50">
                         <i class="fa-solid fa-list-check text-base"></i>
-                        <span>Kuis Interaktif</span>
+                        <span>Kuis Evaluasi</span>
                     </button>
                     <button onclick="switchCourseTab('uts')" id="tab-btn-uts" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-sky-600 hover:bg-slate-50">
                         <i class="fa-solid fa-file-pen text-base text-amber-500"></i>
-                        <span>Panduan UTS Paper</span>
+                        <span>Panduan Paper UTS</span>
                     </button>
                 </div>
 
-                <!-- TAB CONTENT 1: MATERI PERKULIAHAN -->
+                <!-- TAB CONTENT 1: MATERI PERKULIAHAN (100% COMPLETE WORD-FOR-WORD COVERAGE) -->
                 <div id="course-tab-materi" class="space-y-6">
                     <!-- Meeting Selector Buttons -->
                     <div class="flex flex-wrap gap-2">
@@ -309,117 +358,114 @@
                         <button onclick="selectMeeting(5)" id="m-btn-5" class="meeting-selector-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Pertemuan 5</button>
                     </div>
 
-                    <!-- Meeting Display Container -->
-                    <div id="meeting-content-body" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
-                        <!-- Content Injected via JS -->
-                    </div>
+                    <!-- Article Body Display Container (News Portal Article Style) -->
+                    <article id="meeting-content-body" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-8 min-h-[500px]">
+                        <!-- Dynamic Injection -->
+                    </article>
                 </div>
 
-                <!-- TAB CONTENT 2: KUIS INTERAKTIF -->
+                <!-- TAB CONTENT 2: KUIS EVALUASI -->
                 <div id="course-tab-kuis" class="hidden space-y-6">
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="selectQuizMeeting(1)" id="q-m-btn-1" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-sky-600 text-white shadow-sm transition">Kuis Pertemuan 1</button>
-                        <button onclick="selectQuizMeeting(2)" id="q-m-btn-2" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis Pertemuan 2</button>
-                        <button onclick="selectQuizMeeting(3)" id="q-m-btn-3" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis Pertemuan 3</button>
-                        <button onclick="selectQuizMeeting(4)" id="q-m-btn-4" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis Pertemuan 4</button>
-                        <button onclick="selectQuizMeeting(5)" id="q-m-btn-5" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis Pertemuan 5</button>
+                        <button onclick="selectQuizMeeting(1)" id="q-m-btn-1" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-sky-600 text-white shadow-sm transition">Kuis P1</button>
+                        <button onclick="selectQuizMeeting(2)" id="q-m-btn-2" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P2</button>
+                        <button onclick="selectQuizMeeting(3)" id="q-m-btn-3" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P3</button>
+                        <button onclick="selectQuizMeeting(4)" id="q-m-btn-4" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P4</button>
+                        <button onclick="selectQuizMeeting(5)" id="q-m-btn-5" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P5</button>
                     </div>
 
-                    <div id="quiz-content-body" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
-                        <!-- Quiz Form Injected via JS -->
+                    <div id="quiz-content-body" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-6">
+                        <!-- Dynamic Quiz Form -->
                     </div>
                 </div>
 
                 <!-- TAB CONTENT 3: PANDUAN UTS PAPER -->
                 <div id="course-tab-uts" class="hidden space-y-6">
-                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6 text-slate-700 text-sm leading-relaxed">
-                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-2xl flex items-center justify-between flex-wrap gap-4">
-                            <div>
-                                <p class="font-bold text-amber-900 text-base">Deadline Pengumpulan Paper UTS</p>
-                                <p class="text-xs text-amber-800">Jumat, 23 Oktober 2026 (Upload ke Google Drive Kelas & Rekap Sheet)</p>
-                            </div>
-                            <span class="bg-amber-500 text-white font-bold px-4 py-2 rounded-xl text-xs shadow">Satu Mata Kuliah</span>
-                        </div>
-
-                        <h3 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">Instruksi Penugasan</h3>
-                        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm">
-                            <li>Buatlah sebuah <strong>essai ilmiah</strong> dengan tema yang relevan dengan isu dalam mata kuliah Perkembangan Teknologi Komunikasi.</li>
-                            <li>Secara spesifik, tentukan satu fenomena riil dan bahas fenomena tersebut menggunakan konsep-konsep yang telah dipelajari di kelas.</li>
-                            <li>Paper dikumpulkan ke <strong>Google Drive Kelas</strong> dengan format subjek: <code class="bg-slate-100 px-2 py-0.5 rounded text-amber-800 font-mono font-bold">UTS_PERTEKOM_NAMA_NIM</code>.</li>
-                            <li>Link GDrive silakan dimasukkan ke Google Sheet yang disediakan oleh dosen.</li>
-                        </ol>
-
-                        <h3 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">Komponen Utama Paper</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-center text-xs">
-                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-bold block text-sky-600">1. Judul</span> Menarik & Spesifik</div>
-                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-bold block text-sky-600">2. Pendahuluan</span> Latar Belakang & Tujuan</div>
-                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-bold block text-sky-600">3. Pembahasan</span> Literature Review & Analisis</div>
-                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-bold block text-sky-600">4. Kesimpulan</span> Inti Temuan Paper</div>
-                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-bold block text-sky-600">5. Daftar Pustaka</span> Referensi Ilmiah Valid</div>
-                        </div>
-
-                        <h3 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">5 Pilihan Tema Utama</h3>
-                        <div class="space-y-3 text-xs sm:text-sm">
-                            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
-                                <span class="font-bold text-sky-700">Tema 1: Determinasi Teknologi</span>
-                                <p class="text-xs text-slate-600 mt-1">"Apakah Manusia Mengendalikan Teknologi atau Justru Dikendalikan Olehnya?"</p>
-                            </div>
-                            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
-                                <span class="font-bold text-sky-700">Tema 2: Network Society</span>
-                                <p class="text-xs text-slate-600 mt-1">"Kekuasaan Algoritma dan Penyebaran Informasi dalam Masyarakat Digital."</p>
-                            </div>
-                            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
-                                <span class="font-bold text-sky-700">Tema 3: Social Construction of Technology (SCOT)</span>
-                                <p class="text-xs text-slate-600 mt-1">"Bagaimana Masyarakat Membentuk Penggunaan dan Makna Teknologi Komunikasi?"</p>
-                            </div>
-                            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
-                                <span class="font-bold text-sky-700">Tema 4: Difusi Inovasi</span>
-                                <p class="text-xs text-slate-600 mt-1">"Bagaimana Teknologi Komunikasi Baru Diterima atau Ditolak oleh Masyarakat?"</p>
-                            </div>
-                            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
-                                <span class="font-bold text-sky-700">Tema 5: Cybercrime dan Cybersecurity</span>
-                                <p class="text-xs text-slate-600 mt-1">"Cybercrime dan Cybersecurity : Sebuah Tinjauan Fenomena dan Solusinya."</p>
+                    <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-8 article-body">
+                        <!-- Header Banner -->
+                        <div class="border-b border-slate-200 pb-6 space-y-3">
+                            <span class="bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1 rounded-full text-xs font-bold uppercase">Panduan Penugasan Akhir</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Instruksi Penulisan Paper UTS</h2>
+                            <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 pt-1">
+                                <span><i class="fa-solid fa-calendar text-amber-500 mr-1.5"></i> Deadline: <strong>Jumat, 23 Oktober 2026</strong></span>
+                                <span><i class="fa-solid fa-folder text-sky-500 mr-1.5"></i> Pengumpulan: GDrive Kelas & Google Sheet</span>
                             </div>
                         </div>
 
-                        <div class="bg-red-50 border border-red-200 p-5 rounded-2xl text-red-900 space-y-2 text-xs sm:text-sm">
-                            <p class="font-bold text-base"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Ketentuan AI & Plagiarisme</p>
-                            <p class="text-xs">
-                                1. Ikuti tata penulisan yang baik sehingga terhindar dari isu plagiat. Tidak ada toleransi untuk plagiasi.<br>
-                                2. <strong>Bijak dalam penggunaan AI:</strong> Jika menggunakan bantuan AI, WAJIB menyertakan <em>lembar consent</em> berupa:
-                            </p>
-                            <ul class="list-disc pl-6 text-xs space-y-1 text-red-800">
-                                <li>Pernyataan menggunakan AI</li>
-                                <li>Menyertakan prompt yang digunakan</li>
-                                <li>Menunjukkan bagian tulisan yang dibantu AI</li>
-                                <li>Lampirkan di akhir tugas paper</li>
-                            </ul>
-                            <p class="text-xs font-bold pt-1 text-red-900">Catatan: Tidak ada ujian susulan untuk tugas akhir ini.</p>
+                        <!-- Instruksi Penugasan -->
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-slate-900 border-l-4 border-amber-500 pl-3">1. Instruksi Penugasan</h3>
+                            <ol class="list-decimal pl-6 space-y-2">
+                                <li>Buatlah sebuah <strong>essai</strong> dengan tema yang relevan dengan isu dalam mata kuliah Perkembangan Teknologi Komunikasi.</li>
+                                <li>Secara spesifik, tentukan satu fenomena dan coba bahas fenomena tersebut dengan konsep-konsep yang sudah kita dipelajari di matakuliah ini.</li>
+                                <li>Paper dikumpulkan ke <strong>gdrive kelas</strong> dengan subjek: <code class="bg-amber-100 px-2 py-0.5 rounded font-mono font-bold text-amber-900">UTS_PERTEKOM_NAMA_NIM</code>.</li>
+                                <li>Link gdrive silakan masukan ke google sheet yang disediakan dosen.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Komponen-Komponen dalam Paper -->
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-slate-900 border-l-4 border-sky-500 pl-3">2. Komponen-Komponen dalam Paper</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-center">
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-extrabold text-sky-600 block text-lg">1</span><strong>Judul</strong></div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-extrabold text-sky-600 block text-lg">2</span><strong>Pendahuluan</strong><br><span class="text-xs text-slate-500">Latar belakang & tujuan</span></div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-extrabold text-sky-600 block text-lg">3</span><strong>Pembahasan</strong><br><span class="text-xs text-slate-500">Literature review, data & analisis</span></div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-extrabold text-sky-600 block text-lg">4</span><strong>Kesimpulan</strong></div>
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl"><span class="font-extrabold text-sky-600 block text-lg">5</span><strong>Daftar Pustaka</strong></div>
+                            </div>
+                        </div>
+
+                        <!-- Pilihan Tema -->
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-slate-900 border-l-4 border-indigo-500 pl-3">3. Pilihan Tema Paper</h3>
+                            <div class="space-y-3">
+                                <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-2xl space-y-1">
+                                    <span class="font-bold text-indigo-950 block">1. Determinasi Teknologi:</span>
+                                    <p class="text-slate-700 italic">"Apakah Manusia Mengendalikan Teknologi atau Justru Dikendalikan Olehnya?"</p>
+                                </div>
+                                <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-2xl space-y-1">
+                                    <span class="font-bold text-indigo-950 block">2. Network Society:</span>
+                                    <p class="text-slate-700 italic">"Kekuasaan Algoritma dan Penyebaran Informasi dalam Masyarakat Digital."</p>
+                                </div>
+                                <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-2xl space-y-1">
+                                    <span class="font-bold text-indigo-950 block">3. Social Construction of Technology (SCOT):</span>
+                                    <p class="text-slate-700 italic">"Bagaimana Masyarakat Membentuk Penggunaan dan Makna Teknologi Komunikasi?"</p>
+                                </div>
+                                <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-2xl space-y-1">
+                                    <span class="font-bold text-indigo-950 block">4. Difusi Inovasi:</span>
+                                    <p class="text-slate-700 italic">"Bagaimana Teknologi Komunikasi Baru Diterima atau Ditolak oleh Masyarakat?"</p>
+                                </div>
+                                <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-2xl space-y-1">
+                                    <span class="font-bold text-indigo-950 block">5. Cybercrime dan Cybersecurity:</span>
+                                    <p class="text-slate-700 italic">"Sebuah Tinjauan Fenomena dan Solusinya."</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ketentuan Tambahan & AI Consent -->
+                        <div class="bg-red-50 border border-red-200 p-6 rounded-3xl space-y-4 text-red-950">
+                            <h4 class="font-extrabold text-lg flex items-center gap-2 text-red-900">
+                                <i class="fa-solid fa-triangle-exclamation text-red-600"></i>
+                                <span>Ketentuan Penulisan, Plagiarisme & Bantuan AI</span>
+                            </h4>
+                            <ol class="list-decimal pl-6 space-y-2 text-sm leading-relaxed">
+                                <li>Mahasiswa diharapkan untuk menyusun paper dengan struktur yang baik, menganalisis topik secara mendalam, memberikan argumen yang kuat, dan menyertakan referensi yang relevan.</li>
+                                <li>Ikuti tata penulisan yang baik sehingga anda terhindar dari isu plagiat. <strong>Tidak ada toleransi untuk plagiasi.</strong></li>
+                                <li>
+                                    <strong>Bijak dalam penggunaan bantuan AI.</strong> Jika menggunakan wajib menyertakan <u>lembar consent</u> sebagai tanggung jawab penggunaan berupa :
+                                    <ul class="list-disc pl-6 mt-1 space-y-0.5 text-red-900 font-medium">
+                                        <li>a. Berisi pernyataan menggunakan AI</li>
+                                        <li>b. Menyertakan prompt yang digunakan</li>
+                                        <li>c. Menunjukan pada bagian tulisan</li>
+                                        <li>d. Lampirkan di akhir tugas</li>
+                                    </ul>
+                                </li>
+                                <li class="font-extrabold text-red-900 pt-2">Tidak ada ujian susulan untuk tugas akhir ini.</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- ================= VIEW DIRECT KUIS SHORTCUT ================= -->
-            <div id="view-kuis-direct" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-                    <h2 class="text-2xl font-bold text-slate-900">Kuis Interaktif Mata Kuliah</h2>
-                    <p class="text-xs text-slate-500">Pilih kuis per pertemuan di bawah ini. Anda juga dapat mengakses kuis langsung dari halaman Mata Kuliah.</p>
-                    <button onclick="openCourseDetail('kuis')" class="bg-sky-600 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow hover:bg-sky-700 transition">
-                        Buka Ruang Kuis Matkul <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- ================= VIEW DIRECT UTS SHORTCUT ================= -->
-            <div id="view-uts-direct" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-                    <h2 class="text-2xl font-bold text-slate-900">Panduan Tugas Paper UTS</h2>
-                    <p class="text-xs text-slate-500">Akses instruksi resmi dan pilihan tema penulisan paper UTS Perkembangan Teknologi Komunikasi.</p>
-                    <button onclick="openCourseDetail('uts')" class="bg-amber-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow hover:bg-amber-600 transition">
-                        Lihat Detail Tugas UTS <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
             </div>
 
         </main>
@@ -427,305 +473,598 @@
 
     <!-- ================= JAVASCRIPT LOGIC ================= -->
     <script>
-        // DATA MATERI PERTEMUAN (SESUAI FULL PPT)
+        // SIDEBAR MINI / EXPANDED TOGGLE STATE
+        let sidebarOpen = true;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('toggle-icon');
+            const text = document.getElementById('toggle-text');
+
+            sidebarOpen = !sidebarOpen;
+
+            if (sidebarOpen) {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                if (icon) icon.className = "fa-solid fa-angles-left text-base transition-transform duration-300";
+                if (text) text.innerText = "Ciutkan";
+            } else {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                if (icon) icon.className = "fa-solid fa-angles-right text-base transition-transform duration-300";
+                if (text) text.innerText = "Perluas";
+            }
+        }
+
+        // FULL WORD-FOR-WORD MATERI DATA FROM ALL 5 PPT FILES
         const meetingsData = {
             1: {
                 badge: "Pertemuan 1",
-                title: "Pengantar Perkembangan Teknologi Komunikasi",
-                subtitle: "Definisi, Communication vs Communications, Tipologi & Karakteristik Rogers",
+                title: "Perkembangan Teknologi Komunikasi",
+                lecturer: "Musfiah Saidah, M. Si",
                 html: `
-                    <div class="space-y-6">
-                        <div class="bg-sky-50 border-l-4 border-sky-500 p-4 rounded-r-2xl">
-                            <h4 class="font-bold text-sky-950 text-base mb-1">Definisi Teknologi (Berniker, 1987)</h4>
-                            <p class="text-xs sm:text-sm text-sky-900 leading-relaxed">
-                                Menurut Berniker (1987), <strong>teknologi</strong> adalah sebuah pengetahuan dan di dalamnya terdapat metode, seni, dan cara kerja untuk membangun dunia.
-                            </p>
-                        </div>
+                    <!-- Header Editorial -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Materi Pertemuan 1</span>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 leading-tight">
+                            Perkembangan Teknologi Komunikasi
+                        </h1>
+                        <p class="text-sm font-semibold text-sky-600 mt-2">Oleh : Musfiah Saidah, M. Si</p>
+                    </div>
 
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-arrows-split-up-and-left text-sky-500"></i>
-                                Communication Vs Communications
-                            </h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                                    <span class="bg-sky-100 text-sky-800 text-xs font-bold px-2.5 py-1 rounded-full">Communication (Proses)</span>
-                                    <p class="text-xs text-slate-600 mt-2 mb-2">Proses penyampaian informasi dan makna antar manusia.</p>
-                                    <ul class="text-xs text-slate-700 space-y-1 font-medium">
-                                        <li>• Obrolan langsung dengan teman</li>
-                                        <li>• Dosen menjelaskan materi di kelas</li>
-                                        <li>• Pertunjukan teater panggung</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                                    <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-2.5 py-1 rounded-full">Communications (Saluran)</span>
-                                    <p class="text-xs text-slate-600 mt-2 mb-2">Saluran atau perangkat teknis yang digunakan untuk mengirim pesan.</p>
-                                    <ul class="text-xs text-slate-700 space-y-1 font-medium">
-                                        <li>• Aplikasi WhatsApp</li>
-                                        <li>• Stasiun Televisi</li>
-                                        <li>• Google Meet / Zoom</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="article-body space-y-6">
+                        <!-- Section 1 -->
+                        <p class="drop-cap">
+                            Menurut Berniker (1987), <strong>teknologi</strong> adalah sebuah pengetahuan dan di dalamnya terdapat metode, seni, dan cara kerja untuk membangun dunia.
+                        </p>
 
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-base mb-3">Tipologi Teknologi Komunikasi (Thompson & Andreas Hepp)</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                                <div class="p-3.5 bg-sky-50/60 rounded-2xl border border-sky-100">
-                                    <span class="font-bold text-sky-900 block mb-1">1. Direct Communication</span>
-                                    <span class="text-slate-600">Interaksi tatap muka langsung (dialogis) tanpa perantara alat teknis.</span>
-                                </div>
-                                <div class="p-3.5 bg-sky-50/60 rounded-2xl border border-sky-100">
-                                    <span class="font-bold text-sky-900 block mb-1">2. Reciprocal Mediated Personal</span>
-                                    <span class="text-slate-600">Komunikasi pribadi timbal balik yang dimediasi alat teknis (telepon, chat).</span>
-                                </div>
-                                <div class="p-3.5 bg-sky-50/60 rounded-2xl border border-sky-100">
-                                    <span class="font-bold text-sky-900 block mb-1">3. Produced Media Communication</span>
-                                    <span class="text-slate-600">Komunikasi media massa klasik (Koran, Radio, TV Broadcast).</span>
-                                </div>
-                                <div class="p-3.5 bg-sky-50/60 rounded-2xl border border-sky-100">
-                                    <span class="font-bold text-sky-900 block mb-1">4. Virtualised Media Communication</span>
-                                    <span class="text-slate-600">Komunikasi dalam lingkungan digital terhubung jaringan interaktif.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 text-white p-5 rounded-3xl space-y-2">
-                            <h4 class="font-bold text-amber-400 text-sm">Perspektif Kapitalisme & Materialisme Media</h4>
+                        <!-- Callout Box Jurnal -->
+                        <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl space-y-3 shadow-md">
+                            <span class="text-amber-400 font-bold text-xs uppercase tracking-wider block"><i class="fa-solid fa-book-bookmark mr-2"></i>Memahami dari jurnal</span>
+                            <h3 class="text-xl font-bold text-white">CHAPTER 6: Communication Technologies: Means of Communication as Means of Production</h3>
                             <p class="text-xs text-slate-300 leading-relaxed">
-                                Komunikasi berkaitan erat dengan kapitalisme dan kekuasaan (*power*). Teknologi komunikasi berperan sebagai sarana produksi (*means of production*), membentuk struktur kepemilikan media, dan memungkinkan eksploitasi pekerja/audiens.
+                                Catatan materi jurnal mencakup: Cara menyampaikan informasi, 5 pembagian teknologi komunikasi, Kapitalisme Teknologi, Transformasi teknologi, Perspektif Materialisme, Kepemilikan dan kekuasaan, Eksploitasi pekerja. Komunikasi berkaitan dengan kapitalisme dan Power.
                             </p>
                         </div>
 
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-base mb-3">5 Karakteristik Utama Teknologi Komunikasi (Everett M. Rogers)</h4>
-                            <div class="space-y-2 text-xs">
-                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200"><strong>1. Interaktivitas:</strong> Kemampuan memfasilitasi komunikasi dua arah secara aktif.</div>
-                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200"><strong>2. Demassifikasi:</strong> Pesan khusus dapat terpersonalisasi untuk individu dalam khalayak luas.</div>
-                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200"><strong>3. Asinkron:</strong> Pengiriman dan penerimaan pesan fleksibel pada waktu yang berbeda.</div>
-                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200"><strong>4. Digitalization (Bit):</strong> Mengubah pesan ke dalam data digit berkecepatan tinggi.</div>
-                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200"><strong>5. Konvergensi:</strong> Penggabungan berbagai saluran media (teks, suara, video) dalam 1 jaringan.</div>
+                        <!-- Process vs Channels -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-sky-600 pl-3">Communication Vs Communications</h3>
+                            <p>
+                                Pemahaman dasar membedakan komunikasi sebagai proses interaksi sosial (*Communication*) dengan komunikasi sebagai saluran atau media teknis (*Communications*).
+                            </p>
+
+                            <!-- Graphic Table/Cards for Contoh -->
+                            <div class="bg-sky-50 border border-sky-200 p-6 rounded-3xl space-y-3">
+                                <h4 class="font-extrabold text-sky-950 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-table-cells text-sky-600"></i> CONTOH MATRIKS PROSES & SALURAN
+                                </h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                                    <div class="p-4 bg-white rounded-2xl border border-sky-100 shadow-xs">
+                                        <p class="font-bold text-slate-800">1. Ngobrol</p>
+                                        <p class="text-xs text-sky-700 mt-1">Proses: Ngobrol<br>Saluran: WhatsApp</p>
+                                    </div>
+                                    <div class="p-4 bg-white rounded-2xl border border-sky-100 shadow-xs">
+                                        <p class="font-bold text-slate-800">2. Perkuliahan</p>
+                                        <p class="text-xs text-sky-700 mt-1">Proses: Dosen menjelaskan<br>Saluran: Televisi</p>
+                                    </div>
+                                    <div class="p-4 bg-white rounded-2xl border border-sky-100 shadow-xs">
+                                        <p class="font-bold text-slate-800">3. Seni Pertunjukan</p>
+                                        <p class="text-xs text-sky-700 mt-1">Proses: Teater<br>Saluran: Gmeet / Zoom</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tipologi John B Thompson & Andreas Hepp -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-indigo-600 pl-3">Tipologi Berdasarkan Jumlah Peserta, Konteks & Saluran Media</h3>
+                            <p>
+                                John B. Thompson discerns three forms of communication: face-to-face interaction that is dialogical (e.g. a conversation with friends), mediated interaction that is dialogical (e.g. a phone call), and mediated quasi-interaction that is monological (e.g. mass media such as a radio and television broadcast or a newspaper article).
+                            </p>
+                            <p>
+                                Building on and further extending Thompson’s distinction to include digital communication, Andreas Hepp distinguishes four types of communication:
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                                    <span class="font-bold text-sky-700 block mb-1">1. Direct Communication</span>
+                                    <p class="text-xs text-slate-600">'direct conversation with other people' (komunikasi tatap muka langsung).</p>
+                                </div>
+                                <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                                    <span class="font-bold text-sky-700 block mb-1">2. Reciprocal Technically Mediated Personal Communication</span>
+                                    <p class="text-xs text-slate-600">'technically mediated personal communication with other persons' [for instance, through the use of a telephone].</p>
+                                </div>
+                                <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                                    <span class="font-bold text-sky-700 block mb-1">3. Produced Media Communication</span>
+                                    <p class="text-xs text-slate-600">'the sphere of media mass communication' [newspaper, radio, TV].</p>
+                                </div>
+                                <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                                    <span class="font-bold text-sky-700 block mb-1">4. Virtualised Media Communication</span>
+                                    <p class="text-xs text-slate-600">'communication in digital and networked environment'.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Karakteristik Rogers -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-emerald-600 pl-3">Karakteristik Teknologi Komunikasi</h3>
+                            <p>
+                                Menurut Everett M. Rogers dan ahli komunikasi media baru lainnya, ada lima karakteristik utama yang melekat pada teknologi komunikasi:
+                            </p>
+                            <div class="space-y-3">
+                                <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl flex items-start gap-3">
+                                    <span class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</span>
+                                    <div>
+                                        <strong class="text-emerald-950 block">Interaktivitas (Interactivity)</strong>
+                                        <span class="text-xs text-slate-700">Kemampuan sistem komunikasi baru untuk memfasilitasi komunikasi timbal balik dua arah antara pengirim dan penerima.</span>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl flex items-start gap-3">
+                                    <span class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</span>
+                                    <div>
+                                        <strong class="text-emerald-950 block">Demassifikasi (Demassification)</strong>
+                                        <span class="text-xs text-slate-700">Kemampuan media untuk mengirimkan pesan khusus/terpersonalisasi kepada audiens individu dari khalayak massal.</span>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl flex items-start gap-3">
+                                    <span class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</span>
+                                    <div>
+                                        <strong class="text-emerald-950 block">Asinkron (Asynchronous)</strong>
+                                        <span class="text-xs text-slate-700">Kemampuan mengirim dan menerima pesan pada waktu yang berbeda secara fleksibel bagi para pengguna.</span>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl flex items-start gap-3">
+                                    <span class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</span>
+                                    <div>
+                                        <strong class="text-emerald-950 block">Digitalisasi / Bit (Digitalization)</strong>
+                                        <span class="text-xs text-slate-700">Proses pengodean informasi ke dalam sinyal biner (bit) berkecepatan tinggi.</span>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl flex items-start gap-3">
+                                    <span class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">5</span>
+                                    <div>
+                                        <strong class="text-emerald-950 block">Konvergensi (Convergence)</strong>
+                                        <span class="text-xs text-slate-700">Penggabungan berbagai saluran media (teks, audio, video, dan data) ke dalam satu platform digital terpadu.</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Menurut Berniker (1987), teknologi didefinisikan sebagai...",
+                        q: "Menurut Berniker (1987), apa definisi teknologi?",
                         options: [
-                            "Pengetahuan yang berisi metode, seni, dan cara kerja untuk membangun dunia",
-                            "Perangkat keras mesin industri otomatis",
-                            "Aplikasi komputer berbasis algoritma",
-                            "Sistem penyiaran radio dan televisi"
+                            "Sebuah pengetahuan dan di dalamnya terdapat metode, seni, dan cara kerja untuk membangun dunia",
+                            "Sistem mesin otomatis untuk memproduksi barang konsumsi",
+                            "Aplikasi komunikasi modern berbasis smartphone",
+                            "Perangkat elektronik pemancar gelombang radio"
                         ],
                         correct: 0,
-                        exp: "Berniker (1987) mendefinisikan teknologi sebagai pengetahuan yang mencakup metode, seni, dan cara kerja untuk membangun dunia."
+                        exp: "Berniker (1987) mendefinisikan teknologi sebagai pengetahuan yang memuat metode, seni, dan cara kerja untuk membangun dunia."
                     },
                     {
-                        q: "Pernyataan mana yang menggambarkan contoh 'Communications' (Saluran/Media)?",
+                        q: "Manakah contoh pasangan 'Proses' dan 'Saluran' yang benar menurut materi Pertemuan 1?",
                         options: [
-                            "Dosen bercakap-cakap langsung dengan mahasiswa",
-                            "Aplikasi WhatsApp dan Televisi",
-                            "Proses diskusi kelompok tatap muka",
-                            "Obrolan santai di warung kopi"
+                            "Proses: WhatsApp, Saluran: Ngobrol",
+                            "Proses: Dosen menjelaskan, Saluran: Televisi",
+                            "Proses: Zoom, Saluran: Teater",
+                            "Proses: Televisi, Saluran: Diskusi"
                         ],
                         correct: 1,
-                        exp: "Communications merujuk pada alat atau perantara teknis seperti WhatsApp atau TV, sedangkan Communication merujuk pada proses komunikasinya."
+                        exp: "Proses adalah aktivitas komunikasinya (Dosen menjelaskan), sedangkan saluran adalah medianya (Televisi)."
                     }
                 ]
             },
 
             2: {
                 badge: "Pertemuan 2",
-                title: "Determinisme Teknologi vs SCOT",
-                subtitle: "Marshall McLuhan vs Konstruktivisme Sosial & Studi Kasus Media Sosial",
+                title: "Teori-Teori Determinisme Teknologi vs SCOT",
+                lecturer: "Musfiah Saidah, M. Si",
                 html: `
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div class="p-5 rounded-3xl bg-indigo-50 border border-indigo-200 space-y-2">
-                                <span class="bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full">Determinisme Teknologi</span>
-                                <h4 class="font-bold text-indigo-950 text-base pt-1">Technological Determinism</h4>
-                                <p class="text-xs text-indigo-900 leading-relaxed">
-                                    Teknologilah yang membentuk dan mengendalikan masyarakat secara otonom.
-                                </p>
-                                <blockquote class="italic text-xs font-serif text-indigo-800 bg-white/80 p-3 rounded-xl border border-indigo-100">
-                                    "We shape our tools, and thereafter our tools shape us" — Marshall McLuhan
-                                </blockquote>
+                    <!-- Header Editorial -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Materi Pertemuan 2</span>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 leading-tight">
+                            Teori-Teori Perkembangan Teknologi Komunikasi
+                        </h1>
+                        <p class="text-sm font-semibold text-sky-600 mt-2">"Manusia yang mendominasi teknologi atau teknologi mendominasi manusia?"</p>
+                    </div>
+
+                    <div class="article-body space-y-6">
+                        <!-- Intro Case Context Maudy -->
+                        <div class="bg-amber-50 border border-amber-200 p-6 rounded-3xl space-y-2">
+                            <span class="bg-amber-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Refleksi Kasus</span>
+                            <h3 class="text-lg font-bold text-amber-950">Perspektif Kontroversi Video Maudy Ayunda</h3>
+                            <p class="text-sm text-amber-900 leading-relaxed">
+                                Dalam konteks video Maudy, persoalannya bukan sekadar “berita buruk”, tetapi kondisi teknologi komunikasi yang membuat seseorang sulit benar-benar keluar dari arus informasi.
+                            </p>
+                        </div>
+
+                        <!-- POV SCOT Matriks Platform -->
+                        <div class="space-y-4">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-purple-600 pl-3">POV SCOT (Social Construction of Technology)</h3>
+                            <p>
+                                YouTube, X, Instagram, dan Threads sebenarnya hanyalah teknologi/platform. Bagaimana platform tersebut digunakan dan makna yang terbentuk ditentukan oleh tindakan pengguna:
+                            </p>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left border-collapse bg-white rounded-2xl overflow-hidden border border-slate-200">
+                                    <thead>
+                                        <tr class="bg-purple-900 text-white font-bold">
+                                            <th class="p-3.5">Teknologi / Platform</th>
+                                            <th class="p-3.5">Cara Digunakan</th>
+                                            <th class="p-3.5">Makna yang Terbentuk</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200 text-slate-700">
+                                        <tr>
+                                            <td class="p-3.5 font-bold text-purple-900">YouTube</td>
+                                            <td class="p-3.5">Maudy membuat video refleksi</td>
+                                            <td class="p-3.5 bg-purple-50/50">Ruang edukasi / refleksi</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3.5 font-bold text-purple-900">X (Twitter)</td>
+                                            <td class="p-3.5">Netizen mengkritik video</td>
+                                            <td class="p-3.5 bg-purple-50/50">Ruang kritik publik</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3.5 font-bold text-purple-900">Threads</td>
+                                            <td class="p-3.5">Diskusi dan respons</td>
+                                            <td class="p-3.5 bg-purple-50/50">Ruang percakapan</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3.5 font-bold text-purple-900">Algoritma</td>
+                                            <td class="p-3.5">Mengangkat potongan kontroversial</td>
+                                            <td class="p-3.5 bg-purple-50/50">Memperluas perhatian</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3.5 font-bold text-purple-900">Comment section</td>
+                                            <td class="p-3.5">Memberikan respons</td>
+                                            <td class="p-3.5 bg-purple-50/50">Mekanisme negosiasi makna</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
-                            <div class="p-5 rounded-3xl bg-purple-50 border border-purple-200 space-y-2">
-                                <span class="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">Konstruktivisme Sosial</span>
-                                <h4 class="font-bold text-purple-950 text-base pt-1">Social Construction of Technology (SCOT)</h4>
-                                <p class="text-xs text-purple-900 leading-relaxed">
-                                    Perkembangan dan makna teknologi merupakan hasil dari negosiasi sosial, budaya, dan kebutuhan aktif manusia (*human agency*).
-                                </p>
+                            <div class="p-4 bg-slate-100 rounded-2xl text-xs text-slate-700 italic border-l-4 border-slate-400">
+                                Konten yang awalnya dimaksudkan sebagai “Bagaimana saya menjaga kesehatan mental di tengah banjir berita buruk” dimaknai oleh sebagian audiens menjadi: “Orang yang punya privilese menyuruh masyarakat menjauh dari persoalan sosial.”
                             </div>
                         </div>
 
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-base mb-3">Tabel Komparasi Teori</h4>
+                        <!-- Teori 1: Determinisme Teknologi -->
+                        <div class="space-y-3 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-indigo-600 pl-3">Determinisme Teknologi (Technological Determinism)</h3>
+                            <p>
+                                Pendekatan ini memandang bahwa teknologilah yang membentuk dan mengendalikan masyarakat.
+                            </p>
+                            <ul class="list-disc pl-6 space-y-2 text-sm text-slate-700">
+                                <li><strong>Inti Pemikiran:</strong> Perkembangan teknologi berjalan secara otonom dan menjadi penggerak utama perubahan sosial, budaya, struktur politik, hingga cara berpikir manusia.</li>
+                                <li><strong>Perspektif Utama:</strong> <em>"We shape our tools, and thereafter our tools shape us"</em> (Marshall McLuhan).</li>
+                                <li><strong>Contoh:</strong> Penemuan mesin cetak Gutenberg tidak sekadar mencetak buku, tetapi secara otomatis mengubah struktur masyarakat dari budaya lisan menjadi budaya tulisan.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Teori 2: SCOT -->
+                        <div class="space-y-3 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-purple-600 pl-3">Konstruktivisme Sosial (Social Construction of Technology / SCOT)</h3>
+                            <ul class="list-disc pl-6 space-y-2 text-sm text-slate-700">
+                                <li><strong>Inti Pemikiran:</strong> Perkembangan, bentuk, dan pemanfaatan teknologi merupakan hasil dari proses negosiasi sosial, budaya, politik, dan ekonomi oleh berbagai kelompok pengguna (*relevant social groups*).</li>
+                                <li><strong>Perspektif Utama:</strong> Manusia memiliki kendali penuh (*human agency*) untuk menerima, menolak, memodifikasi, atau memberi makna pada suatu teknologi.</li>
+                                <li><strong>Contoh:</strong> Smartphone dibuat dengan berbagai fitur teknis, tetapi cara masyarakat menggunakannya (misalnya menciptakan budaya *work-from-anywhere* atau tren *content creation*) ditentukan oleh kebutuhan.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Tabel Komparasi Utama -->
+                        <div class="space-y-3 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900">Tabel Komparasi Teori Utama</h3>
                             <div class="overflow-x-auto">
-                                <table class="w-full text-xs text-left border-collapse bg-white rounded-2xl overflow-hidden border border-slate-200">
+                                <table class="w-full text-sm text-left border-collapse bg-white rounded-2xl overflow-hidden border border-slate-200">
                                     <thead>
-                                        <tr class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
-                                            <th class="p-3">Aspek</th>
-                                            <th class="p-3 bg-indigo-50/50">Determinisme Teknologi</th>
-                                            <th class="p-3 bg-purple-50/50">Konstruktivisme Sosial (SCOT)</th>
+                                        <tr class="bg-slate-900 text-white font-bold">
+                                            <th class="p-3.5">Aspek</th>
+                                            <th class="p-3.5 bg-indigo-900">Determinisme Teknologi</th>
+                                            <th class="p-3.5 bg-purple-900">Konstruktivisme Sosial (SCOT)</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-slate-100 text-slate-700">
+                                    <tbody class="divide-y divide-slate-200 text-slate-700">
                                         <tr>
-                                            <td class="p-3 font-semibold">Arah Pengaruh</td>
-                                            <td class="p-3">Teknologi &rarr; Masyarakat</td>
-                                            <td class="p-3">Masyarakat &rarr; Teknologi</td>
+                                            <td class="p-3.5 font-bold">Arah Pengaruh</td>
+                                            <td class="p-3.5">Teknologi &rarr; Masyarakat</td>
+                                            <td class="p-3.5">Masyarakat &rarr; Teknologi</td>
                                         </tr>
                                         <tr>
-                                            <td class="p-3 font-semibold">Peran Manusia</td>
-                                            <td class="p-3">Pasif / Mengikuti arus teknologi</td>
-                                            <td class="p-3">Aktif / Membentuk arah teknologi</td>
+                                            <td class="p-3.5 font-bold">Peran Manusia</td>
+                                            <td class="p-3.5">Pasif / Mengikuti arus teknologi</td>
+                                            <td class="p-3.5">Aktif / Membentuk arah teknologi</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3.5 font-bold">Pandangan Utama</td>
+                                            <td class="p-3.5">Teknologi adalah penyebab utama perubahan sosial</td>
+                                            <td class="p-3.5">Teknologi adalah hasil dari interaksi dan kebutuhan sosial</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
-                        <div class="bg-slate-50 p-5 rounded-3xl border border-slate-200 space-y-3">
-                            <h4 class="font-bold text-slate-900 text-base">Studi Kasus Refleksi: Video Maudy Ayunda</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Refleksi video Maudy Ayunda tentang menjaga kesehatan mental dari fenomena berita buruk dimaknai berbeda di tiap platform sosmed (YouTube, X, Threads, Algoritma). Menurut perspektif SCOT, kelompok audiens yang berbeda menegosiasikan makna konten secara aktif sesuai sudut pandang mereka.
-                            </p>
-                        </div>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Siapa tokoh utama pemikir yang terkenal dengan teori Determinisme Teknologi?",
-                        options: ["Marshall McLuhan", "Sandra Petronio", "Manuel Castells", "Everett M. Rogers"],
+                        q: "Kutipan terkenal Marshall McLuhan 'We shape our tools, and thereafter our tools shape us' mewakili teori apa?",
+                        options: [
+                            "Determinisme Teknologi (Technological Determinism)",
+                            "Konstruktivisme Sosial (SCOT)",
+                            "Communication Privacy Management",
+                            "Network Society"
+                        ],
                         correct: 0,
-                        exp: "Marshall McLuhan adalah tokoh utama di balik teori Determinisme Teknologi dengan ungkapan 'We shape our tools, and thereafter our tools shape us'."
+                        exp: "Kutipan ini menegaskan pandangan Determinisme Teknologi bahwa alat/teknologi yang dibuat manusia akhirnya balik membentuk kehidupan manusia."
                     }
                 ]
             },
 
             3: {
                 badge: "Pertemuan 3",
-                title: "Perbandingan 3 Era & Difusi Inovasi Baduy",
-                subtitle: "Era Cetak, Elektronik, Digital & Riset QRIS Desa Kanekes Baduy",
+                title: "Perbandingan Tiga Era & Difusi Inovasi",
+                lecturer: "Musfiah Saidah, M. Si",
                 html: `
-                    <div class="space-y-6">
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-base mb-3">Perbandingan Perkembangan 3 Era Komunikasi</h4>
+                    <!-- Header Editorial -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Materi Pertemuan 3</span>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 leading-tight">
+                            Perkembangan Teknologi dalam 3 Era & Difusi Inovasi
+                        </h1>
+                        <p class="text-sm font-semibold text-sky-600 mt-2">Riset Kasus: Digital Payment di Desa Kanekes Baduy</p>
+                    </div>
+
+                    <div class="article-body space-y-6">
+                        <!-- Perbandingan 3 Era -->
+                        <div class="space-y-4">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-sky-600 pl-3">Perbandingan Tiga Era Perkembangan Teknologi</h3>
                             <div class="overflow-x-auto">
-                                <table class="w-full text-xs text-left border-collapse bg-white rounded-2xl overflow-hidden border border-slate-200">
+                                <table class="w-full text-xs sm:text-sm text-left border-collapse bg-white rounded-2xl overflow-hidden border border-slate-200">
                                     <thead>
                                         <tr class="bg-sky-900 text-white font-bold">
                                             <th class="p-3">Aspek</th>
                                             <th class="p-3">Era Cetak</th>
                                             <th class="p-3">Era Elektronik</th>
-                                            <th class="p-3">Era Digital</th>
+                                            <th class="p-3 bg-sky-800">Era Digital</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-200 text-slate-700">
                                         <tr>
-                                            <td class="p-3 font-bold">Teknologi Utama</td>
+                                            <td class="p-3 font-bold bg-slate-50">Teknologi utama</td>
                                             <td class="p-3">Mesin cetak, kertas</td>
-                                            <td class="p-3">Radio, TV Analog</td>
-                                            <td class="p-3 font-bold text-sky-700">Komputer, Smartphone, Internet</td>
+                                            <td class="p-3">Radio, TV, sinyal analog</td>
+                                            <td class="p-3 font-bold text-sky-700">Komputer, internet, smartphone</td>
                                         </tr>
-                                        <tr class="bg-slate-50/50">
-                                            <td class="p-3 font-bold">Peran Audiens</td>
+                                        <tr>
+                                            <td class="p-3 font-bold bg-slate-50">Bentuk pesan</td>
+                                            <td class="p-3">Teks dan gambar statis</td>
+                                            <td class="p-3">Audio dan audiovisual</td>
+                                            <td class="p-3 font-bold text-sky-700">Multimedia terkonvergensi</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-bold bg-slate-50">Kecepatan & jangkauan</td>
+                                            <td class="p-3">Lambat, distribusi fisik</td>
+                                            <td class="p-3">Real-time, dibatasi pemancar</td>
+                                            <td class="p-3 font-bold text-sky-700">Seketika, tanpa batas geografis</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-bold bg-slate-50">Pola komunikasi</td>
+                                            <td class="p-3">Satu arah (one-to-many)</td>
+                                            <td class="p-3">Satu arah (one-to-many)</td>
+                                            <td class="p-3 font-bold text-sky-700">Multiarah (many-to-many)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-bold bg-slate-50">Peran audiens</td>
                                             <td class="p-3">Pembaca pasif</td>
-                                            <td class="p-3">Penonton pasif</td>
-                                            <td class="p-3 font-bold text-sky-700">Prosumer Aktif (Produsen & Konsumen)</td>
+                                            <td class="p-3">Pendengar/penonton pasif</td>
+                                            <td class="p-3 font-bold text-sky-700">Prosumer aktif</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-bold bg-slate-50">Gatekeeping</td>
+                                            <td class="p-3">Redaksi dan pemilik modal</td>
+                                            <td class="p-3">Stasiun media terpusat</td>
+                                            <td class="p-3 font-bold text-sky-700">Terdesentralisasi, tiap individu produsen</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <div class="bg-sky-50/80 p-5 rounded-3xl border border-sky-200 space-y-3">
-                            <h4 class="font-bold text-sky-950 text-base">Teori Difusi Inovasi (Everett M. Rogers, 1962)</h4>
-                            <p class="text-xs text-slate-700">5 Tahap Adopsi: Pengetahuan &rarr; Persuasi &rarr; Keputusan &rarr; Implementasi &rarr; Konfirmasi.</p>
-                            <p class="text-xs text-slate-700">5 Kelompok Adopter: Innovators (2.5%), Early Adopters (13.5%), Early Majority (34%), Late Majority (34%), Laggards (16%).</p>
+                        <!-- Map of Media Concentration Visual Diagram -->
+                        <div class="bg-slate-900 text-white p-6 rounded-3xl space-y-4">
+                            <span class="bg-amber-500 text-slate-900 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Peta Industri Media</span>
+                            <h3 class="text-xl font-bold text-white">MAP OF MEDIA CONCENTRATION IN INDONESIA (Merlyna Lim, ©2012)</h3>
+                            <p class="text-xs text-slate-300">
+                                Pemetaan oligopoli konglomerasi media di Indonesia memusat pada konglomerat utama: <em>MNC Group, Kompas Gramedia Group, Jawa Pos Group, Trans Corpora (Para) Group, Bakrie & Brothers (Visi Media Asia), Lippo Group, EMTEK Group, Mugi Reka Abadi Group, Media Group, KM Bali Post, Tempo Inti Media, serta State-Public (TVRI 1,2,3)</em>.
+                            </p>
                         </div>
 
-                        <div class="bg-white p-5 rounded-3xl border border-slate-200 space-y-2">
-                            <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Riset Dosen</span>
-                            <h4 class="font-bold text-slate-900 text-base">Difusi Inovasi Digital Payment (QRIS) di Desa Kanekes Baduy</h4>
-                            <p class="text-xs text-slate-500">Musfiah Saidah, Hilda Trianutami, & Fidya Sukma Amani (2022)</p>
-                            <p class="text-xs text-slate-700 leading-relaxed">
-                                Pelaku ekonomi lokal Baduy mulai beradaptasi dengan QRIS untuk bertransaksi dengan wisatawan, meskipun nilai-nilai adat tradisional tetap dijaga dengan selektif.
+                        <!-- Teori Difusi Inovasi & Flowchart -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-emerald-600 pl-3">Teori Difusi Inovasi (Everett M. Rogers, 1962)</h3>
+                            <p>
+                                Difusi inovasi adalah teori yang menjelaskan bagaimana, mengapa, dan seberapa cepat suatu inovasi (gagasan baru, produk teknologi, praktik kerja, atau metode baru) diadopsi oleh individu atau kelompok dalam suatu masyarakat atau organisasi.
                             </p>
+
+                            <!-- Flowchart diagram 8 Tahap Implementasi -->
+                            <div class="bg-slate-50 border border-slate-200 p-6 rounded-3xl space-y-4">
+                                <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-diagram-project text-emerald-600"></i>
+                                    Alur Implementasi Teknologi dalam Komunikasi Massa (8 Tahap)
+                                </h4>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 text-center text-xs font-bold">
+                                    <div class="p-3 bg-sky-600 text-white rounded-xl">1. Identifikasi kebutuhan</div>
+                                    <div class="p-3 bg-sky-600 text-white rounded-xl">2. Perencanaan & Persiapan</div>
+                                    <div class="p-3 bg-sky-600 text-white rounded-xl">3. Pengadaan / Pengembangan</div>
+                                    <div class="p-3 bg-sky-600 text-white rounded-xl">4. Pelaksanaan Implementasi</div>
+                                    <div class="p-3 bg-indigo-600 text-white rounded-xl">5. Pelatihan & Pendampingan</div>
+                                    <div class="p-3 bg-indigo-600 text-white rounded-xl">6. Komunikasi & Koordinasi</div>
+                                    <div class="p-3 bg-indigo-600 text-white rounded-xl">7. Evaluasi & Penyempurnaan</div>
+                                    <div class="p-3 bg-emerald-600 text-white rounded-xl">8. Implementasi Komunikasi Massa</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Riset Baduy Study Case -->
+                        <div class="bg-emerald-50 border border-emerald-200 p-6 rounded-3xl space-y-3">
+                            <span class="bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Artikel Riset Jurnal Dosen</span>
+                            <h3 class="text-xl font-bold text-emerald-950">
+                                Difusi Inovasi Program Digital Payment di Desa Kanekes Baduy
+                            </h3>
+                            <p class="text-xs font-bold text-emerald-800">
+                                Musfiah Saidah; Hilda Trianutami; Fidya Sukma Amani (Komunikasi dan Penyiaran Islam, UIN Syarif Hidayatullah Jakarta) — Diterima 14 Oktober 2022 / Disetujui 16 Desember 2022
+                            </p>
+                            <p class="text-xs text-slate-700 leading-relaxed italic border-l-2 border-emerald-500 pl-3">
+                                ABSTRACT: Communication is one of the keys to establishing community interaction. The Baduy community is one of the societies that has begun to adapt to technology through digital payments (QRIS) for tourists, while maintaining traditional values...
+                            </p>
+                        </div>
+
+                        <!-- 5 Tahap & 5 Kelompok Adopter -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900">5 Tahap Adopsi & 5 Kelompok Adopter (Rogers)</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                                    <strong class="text-slate-900 block text-base">5 Tahap Proses Adopsi Inovasi:</strong>
+                                    <ol class="list-decimal pl-5 text-xs text-slate-700 space-y-1">
+                                        <li><strong>Knowledge</strong> (Pengetahuan)</li>
+                                        <li><strong>Persuasion</strong> (Persuasi)</li>
+                                        <li><strong>Decision</strong> (Keputusan)</li>
+                                        <li><strong>Implementation</strong> (Implementasi)</li>
+                                        <li><strong>Confirmation</strong> (Konfirmasi)</li>
+                                    </ol>
+                                </div>
+                                <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                                    <strong class="text-slate-900 block text-base">5 Kelompok Adopter:</strong>
+                                    <ul class="list-disc pl-5 text-xs text-slate-700 space-y-1">
+                                        <li><strong>Innovators</strong> (2.5%)</li>
+                                        <li><strong>Early Adopters</strong> (13.5%)</li>
+                                        <li><strong>Early Majority</strong> (34%)</li>
+                                        <li><strong>Late Majority</strong> (34%)</li>
+                                        <li><strong>Laggards</strong> (16%)</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Istilah 'Prosumer' pada Era Digital menggambarkan peran audiens yang...",
-                        options: [
-                            "Hanya membaca tulisan secara pasif",
-                            "Menjadi Produsen sekaligus Konsumen konten secara aktif",
-                            "Hanya menonton tayangan TV broadcast",
-                            "Menolak penggunaan smartphone"
-                        ],
-                        correct: 1,
-                        exp: "Prosumer (Producer + Consumer) merujuk pada audiens aktif yang membuat dan mengonsumsi konten media digital."
+                        q: "Berapa persentase kelompok 'Early Majority' dan 'Late Majority' dalam Teori Difusi Inovasi Everett M. Rogers?",
+                        options: ["Masing-masing 34%", "Masing-masing 13.5%", "Innovators 2.5%", "Laggards 16%"],
+                        correct: 0,
+                        exp: "Dalam kurva adopsi inovasi Rogers, Early Majority dan Late Majority masing-masing mencakup 34% populasi."
                     }
                 ]
             },
 
             4: {
                 badge: "Pertemuan 4",
-                title: "Masyarakat Informasi & Network Society",
-                subtitle: "Manuel Castells, Budaya Offline vs Digital, Cultural Communes & Alternative Networks",
+                title: "Masyarakat Informasi & Masyarakat Maya",
+                lecturer: "Musfiah Saidah, M. Si",
                 html: `
-                    <div class="space-y-6">
-                        <div class="bg-gradient-to-r from-sky-600 to-blue-700 text-white p-6 rounded-3xl space-y-2">
-                            <h4 class="font-extrabold text-lg">Network Society (Manuel Castells)</h4>
-                            <p class="text-xs text-sky-100 leading-relaxed">
-                                "Dulu masyarakat dibentuk oleh tempat kita tinggal. Sekarang, masyarakat juga dibentuk oleh jaringan tempat kita terhubung."
+                    <!-- Header Editorial -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Materi Pertemuan 4</span>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 leading-tight">
+                            Masyarakat Informasi dan Masyarakat Maya
+                        </h1>
+                        <p class="text-sm font-semibold text-sky-600 mt-2">Network Society oleh Manuel Castells</p>
+                    </div>
+
+                    <div class="article-body space-y-6">
+                        <!-- Statement Banner -->
+                        <div class="p-6 bg-slate-900 text-white rounded-3xl space-y-3">
+                            <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif italic">
+                                "Masyarakat informasi bukan sekadar masyarakat yang menggunakan teknologi. Teknologi jaringan mengubah cara masyarakat bekerja, menggunakan kekuasaan, berkomunikasi, membangun identitas, dan menjalani kehidupan."
                             </p>
                         </div>
 
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-base mb-3">Tabel Transformasi Budaya</h4>
+                        <!-- Tabel Budaya Offline vs Digital -->
+                        <div class="space-y-4">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-sky-600 pl-3">Komparasi Budaya Offline vs Budaya Digital</h3>
                             <div class="overflow-x-auto">
-                                <table class="w-full text-xs text-left border-collapse bg-white rounded-2xl overflow-hidden border border-slate-200">
+                                <table class="w-full text-sm text-left border-collapse bg-white rounded-2xl overflow-hidden border border-slate-200">
                                     <thead>
-                                        <tr class="bg-slate-900 text-white font-bold">
-                                            <th class="p-3">Budaya Offline</th>
-                                            <th class="p-3 bg-sky-600 text-white">Budaya Digital (Network Society)</th>
+                                        <tr class="bg-sky-900 text-white font-bold">
+                                            <th class="p-3.5">Budaya Offline</th>
+                                            <th class="p-3.5 bg-sky-800">Budaya Digital</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-100 text-slate-700">
-                                        <tr><td class="p-2.5">Gosip lisan</td><td class="p-2.5 font-bold text-sky-700">Spill / Menfess / Thread</td></tr>
-                                        <tr><td class="p-2.5">Nongkrong warung</td><td class="p-2.5 font-bold text-sky-700">Virtual Community (Discord/Reddit)</td></tr>
-                                        <tr><td class="p-2.5">Surat fisik</td><td class="p-2.5 font-bold text-sky-700">DM (Direct Message) / Chat</td></tr>
-                                        <tr><td class="p-2.5">Demonstrasi fisik</td><td class="p-2.5 font-bold text-sky-700">Digital Activism / Hashtag Campaign</td></tr>
+                                        <tr><td class="p-3">Gosip</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Spill</td></tr>
+                                        <tr><td class="p-3">Surat</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">DM (Direct Message)</td></tr>
+                                        <tr><td class="p-3">Nongkrong</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Virtual community</td></tr>
+                                        <tr><td class="p-3">Papan pengumuman</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Instagram Story</td></tr>
+                                        <tr><td class="p-3">Demonstrasi</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Digital activism</td></tr>
+                                        <tr><td class="p-3">Majalah</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">TikTok / YouTube</td></tr>
+                                        <tr><td class="p-3">Idola TV</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Influencer</td></tr>
+                                        <tr><td class="p-3">Forum</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Discord / Reddit</td></tr>
+                                        <tr><td class="p-3">Album foto</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Instagram</td></tr>
+                                        <tr><td class="p-3">Buku harian</td><td class="p-3 font-bold text-sky-700 bg-sky-50/40">Vlog</td></tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                                <strong class="text-slate-900 block mb-1">Cultural Communes</strong>
-                                Mempertahankan nilai identitas tradisional. Fokus: <em>"Siapa Kami"</em>.
+                        <!-- Kutipan Castells & Question -->
+                        <div class="p-6 bg-sky-50 border border-sky-200 rounded-3xl space-y-3">
+                            <blockquote class="text-base font-serif italic text-sky-950">
+                                “Dulu masyarakat dibentuk oleh tempat kita tinggal. Sekarang, masyarakat juga dibentuk oleh jaringan tempat kita terhubung.” — Manuel Castells
+                            </blockquote>
+                            <div class="p-4 bg-white rounded-2xl border border-sky-100 text-slate-800 font-bold text-sm">
+                                <i class="fa-solid fa-comments text-sky-600 mr-2"></i> Diskusi Kelas: "Apakah teknologi membuat manusia semakin terhubung, atau justru semakin terpisah?"
                             </div>
-                            <div class="p-4 bg-sky-50 rounded-2xl border border-sky-200">
-                                <strong class="text-sky-900 block mb-1">Alternative Networks</strong>
-                                Membangun proyek perubahan sosial baru. Fokus: <em>"Apa yang Ingin Kami Ubah"</em>.
+                        </div>
+
+                        <!-- Information Age : Network Society -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-indigo-600 pl-3">Information Age : Network Society</h3>
+                            <p>
+                                Castells melihat masyarakat dalam masyarakat jaringan: perubahan sosial tidak selalu terjadi dengan memperbaiki sistem yang sudah ada dari dalam. Sering kali, perubahan justru muncul dari kelompok di luar jaringan dominan yang menawarkan nilai, identitas, atau cara hidup yang berbeda.
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-5 bg-amber-50/80 border border-amber-200 rounded-2xl space-y-2">
+                                    <h4 class="font-extrabold text-amber-950 text-base">Cultural Communes</h4>
+                                    <ul class="text-xs text-slate-700 space-y-1.5">
+                                        <li>• Mempertahankan identitas dan nilai</li>
+                                        <li>• Cenderung membentuk komunitas</li>
+                                        <li>• Menolak nilai dominan</li>
+                                        <li>• Fokus pada <strong>"siapa kami"</strong></li>
+                                        <li>• <em>Contoh: komunitas agama/etnis</em></li>
+                                    </ul>
+                                </div>
+                                <div class="p-5 bg-sky-50/80 border border-sky-200 rounded-2xl space-y-2">
+                                    <h4 class="font-extrabold text-sky-950 text-base">Alternative Networks</h4>
+                                    <ul class="text-xs text-slate-700 space-y-1.5">
+                                        <li>• Membangun proyek perubahan</li>
+                                        <li>• Cenderung membentuk jaringan</li>
+                                        <li>• Menawarkan alternatif</li>
+                                        <li>• Fokus pada <strong>"apa yang ingin kami ubah"</strong></li>
+                                        <li>• <em>Contoh: feminisme, lingkungan, HAM</em></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Siapa sosiolog pencetus gagasan utama 'Network Society' (Masyarakat Jaringan)?",
-                        options: ["Manuel Castells", "Denis McQuail", "Sandra Petronio", "Thomas Loader"],
+                        q: "Menurut Manuel Castells, apa fokus utama dari 'Alternative Networks'?",
+                        options: [
+                            "Fokus pada 'apa yang ingin kami ubah' (membangun proyek perubahan sosial)",
+                            "Fokus pada 'siapa kami' (mempertahankan komunitas etnis)",
+                            "Hanya menjual produk e-commerce",
+                            "Membatasi komunikasi jaringan internet"
+                        ],
                         correct: 0,
-                        exp: "Manuel Castells mempopulerkan teori Network Society dalam trilogi bukunya mengenai Era Informasi."
+                        exp: "Alternative Networks berfokus pada proyek perubahan ('apa yang ingin kami ubah') seperti gerakan lingkungan dan HAM."
                     }
                 ]
             },
@@ -733,58 +1072,115 @@
             5: {
                 badge: "Pertemuan 5",
                 title: "Cybercrime, CPM Theory & KBGO",
-                subtitle: "Definisi Cybercrime, Communication Privacy Management, & Kekerasan Berbasis Gender Online",
+                lecturer: "Musfiah Saidah, M. Si",
                 html: `
-                    <div class="space-y-6">
-                        <div class="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-2xl space-y-1">
-                            <h4 class="font-bold text-rose-950 text-base">Pengertian Cybercrime</h4>
-                            <p class="text-xs text-rose-900 leading-relaxed">
-                                Action melanggar hukum yang memanfaatkan komputer, jaringan internet, atau teknologi digital sebagai sarana maupun sasaran kejahatan (David S. Wall, 2001 & Thomas Loader, 2000).
+                    <!-- Header Editorial -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Materi Pertemuan 5</span>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 leading-tight">
+                            Cybercrime, Teori CPM & KBGO
+                        </h1>
+                        <p class="text-sm font-semibold text-sky-600 mt-2">Studi Kasus Digital, Privasi Sosial & Kekerasan Berbasis Gender Online</p>
+                    </div>
+
+                    <div class="article-body space-y-6">
+                        <!-- Studi Kasus 1 Akun Palsu Kampus -->
+                        <div class="bg-red-50 border border-red-200 p-6 rounded-3xl space-y-3">
+                            <span class="bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Studi Kasus 1</span>
+                            <h3 class="text-lg font-bold text-red-950">Akun Palsu di Lingkungan Kampus</h3>
+                            <p class="text-sm text-red-900 leading-relaxed italic">
+                                "Seorang mahasiswa membuat akun anonim untuk mengkritik kebijakan kampus. Suatu hari, akun tersebut mengunggah tangkapan layar percakapan pribadi seorang dosen, disertai nomor telepon dan tuduhan yang belum terverifikasi. Unggahan itu kemudian tersebar luas."
                             </p>
+                            <div class="bg-white p-4 rounded-2xl border border-red-100 space-y-1 text-xs text-red-900">
+                                <strong>Pertanyaan Diskusi:</strong>
+                                <ol class="list-decimal pl-5 space-y-0.5">
+                                    <li>Apakah penggunaan akun anonim otomatis termasuk cybercrime? Mengapa?</li>
+                                    <li>Bentuk-bentuk penyalahgunaan digital apa yang mungkin terjadi dalam kasus tersebut?</li>
+                                    <li>Apa dampak kasus tersebut terhadap privasi, reputasi, dan kepercayaan di lingkungan kampus?</li>
+                                </ol>
+                            </div>
                         </div>
 
-                        <div class="bg-slate-50 p-5 rounded-3xl border border-slate-200 space-y-2">
-                            <h4 class="font-bold text-slate-900 text-base">Communication Privacy Management (CPM Theory)</h4>
-                            <p class="text-xs text-slate-500">Sandra Petronio (2002)</p>
-                            <p class="text-xs text-slate-700 leading-relaxed">
-                                Setiap orang mengelola batasan privasi (*privacy boundaries*). Pembocoran rahasia atau screenshot tanpa izin menyebabkan *boundary turbulence* (gangguan batas privasi).
+                        <!-- Pengertian Cybercrime Paragraf Lengkap -->
+                        <div class="space-y-4">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-red-600 pl-3">Pengertian & Perspektif Cybercrime</h3>
+                            <p>
+                                <strong>David S. Wall (2001)</strong> mengkaji kejahatan internet sebagai fenomena yang berkaitan dengan perubahan teknologi, jaringan, dan kesempatan melakukan kejahatan. Pendekatannya membantu menjelaskan bahwa internet bukan hanya alat komunikasi, tetapi juga lingkungan baru bagi aktivitas kriminal.
                             </p>
+                            <p>
+                                <strong>Thomas dan Loader (2000)</strong> Dalam kajian mereka tentang cybercrime, Thomas dan Loader membahas aktivitas yang dimediasi komputer, termasuk tindakan ilegal atau tindakan yang dipandang melanggar norma tertentu dalam lingkungan jaringan elektronik.
+                            </p>
+                            <p>
+                                Cybercrime bukan semata-mata persoalan teknis komputer. Fenomena ini juga berkaitan dengan perilaku manusia, pola komunikasi, kepercayaan, identitas, dan relasi sosial di ruang digital.
+                            </p>
+                            <div class="p-5 bg-slate-900 text-white rounded-2xl">
+                                <strong class="text-amber-400 block text-base mb-1">Definisi Utama Cybercrime:</strong>
+                                Cybercrime adalah tindakan melanggar hukum yang memanfaatkan komputer, jaringan internet, atau teknologi digital sebagai sarana, sasaran, maupun lingkungan terjadinya kejahatan. Dalam perspektif Perkembangan Teknologi Komunikasi, cybercrime merupakan salah satu konsekuensi dari perubahan cara manusia berkomunikasi, dari interaksi tatap muka menjadi komunikasi yang dimediation teknologi dan terhubung melalui jaringan digital.
+                            </div>
                         </div>
 
-                        <div class="bg-red-900 text-white p-5 rounded-3xl space-y-2">
-                            <h4 class="font-bold text-amber-300 text-base">Kekerasan Berbasis Gender Online (KBGO)</h4>
-                            <p class="text-xs text-slate-200 leading-relaxed">
-                                Kekerasan yang difasilitasi teknologi digital berkaitan dengan gender dan relasi kuasa (seperti doxing, pengancaman, pelecehan digital, atau penyebaran foto tanpa izin).
+                        <!-- Teori CPM & Studi Kasus 2 -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-indigo-600 pl-3">Teori Manajemen Privasi Komunikasi (CPM)</h3>
+                            <p>
+                                Setiap orang memiliki kemampuan untuk menyampaikan atau menyimpan informasi. Menurut Petronio (dalam Griffin, Ledbetter, dan Sparks, 2019: 145), manusia mengelola batasan privasi (*privacy boundaries*) secara sadar.
+                            </p>
+
+                            <!-- Studi Kasus 2 -->
+                            <div class="bg-indigo-50 border border-indigo-200 p-6 rounded-3xl space-y-3">
+                                <span class="bg-indigo-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Studi Kasus 2</span>
+                                <h3 class="text-lg font-bold text-indigo-950">Dari Second Account ke Kekerasan Digital</h3>
+                                <p class="text-sm text-indigo-900 leading-relaxed italic">
+                                    "Seorang mahasiswi memiliki akun Instagram kedua yang hanya diikuti teman-teman dekatnya. Ia mengunggah cerita tentang pengalaman pribadi dan hubungan yang sedang dijalani. Salah satu pengikut mengambil tangkapan layar tanpa sepengetahuannya. Tangkapan layar itu dikirim kepada orang lain, disertai komentar yang mempermalukan korban. Setelah terjadi konflik, seseorang mengancam akan menyebarkan foto pribadi korban ke grup kampus."
+                                </p>
+                                <div class="bg-white p-4 rounded-2xl border border-indigo-100 space-y-1 text-xs text-indigo-900">
+                                    <strong>Pertanyaan Diskusi:</strong>
+                                    <ol class="list-decimal pl-5 space-y-0.5">
+                                        <li>Di bagian mana terjadi perubahan konteks komunikasi?</li>
+                                        <li>Bagaimana teori Communication Privacy Management menjelaskan persoalan ini?</li>
+                                        <li>Apakah kasus tersebut merupakan pelanggaran privasi, KBGO, cybercrime, atau gabungan beberapa kategori?</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KBGO -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-rose-600 pl-3">Kekerasan Berbasis Gender Online (KBGO)</h3>
+                            <p>
+                                Kekerasan Berbasis Gender Online (KBGO) adalah kekerasan yang difasilitasi oleh teknologi digital dan berkaitan dengan gender, relasi kuasa, atau norma gender yang merugikan korban.
+                            </p>
+                            <p>
+                                KBGO dapat terjadi melalui media sosial, aplikasi pesan, forum daring, situs web, maupun teknologi berbasis AI. Dampaknya tidak berhenti di ruang digital; korban dapat mengalami kerugian sosial, psikologis, ekonomi, dan bahkan ancaman keselamatan fisik.
+                            </p>
+                            <p class="p-4 bg-rose-50 border border-rose-200 rounded-2xl font-semibold text-rose-950 text-sm">
+                                Dalam perspektif komunikasi, KBGO penting dipahami sebagai penyalahgunaan pesan, representasi, identitas, dan akses digital untuk melecehkan, mengontrol, mempermalukan, atau mengintimidasi seseorang.
                             </p>
                         </div>
                     </div>
                 `,
                 quiz: [
                     {
-                        q: "Teori yang dikembangkan oleh Sandra Petronio mengenai pengelolaan batas privasi informasi pribadi adalah...",
+                        q: "Menurut Thomas dan Loader (2000), cybercrime mencakup...",
                         options: [
-                            "Communication Privacy Management (CPM)",
-                            "Technological Determinism",
-                            "Diffusion of Innovations",
-                            "Network Society Theory"
+                            "Aktivitas dimediasi komputer yang melanggar hukum/norma di lingkungan jaringan elektronik",
+                            "Kerusakan fisik pada jaringan kabel kabel serat optik",
+                            "Penjualan perangkat keras komputer bekas",
+                            "Penggunaan koneksi internet tanpa kata sandi"
                         ],
                         correct: 0,
-                        exp: "Teori CPM karya Sandra Petronio membahas aturan dan batasan privasi informasi individu."
+                        exp: "Thomas dan Loader (2000) mendefinisikan cybercrime sebagai tindakan dimediasi komputer yang melanggar hukum/norma di ruang elektronik."
                     }
                 ]
             }
         };
 
-        // NAVIGATION LOGIC
+        // NAVIGATION SWITCHER
         function navigateTo(view) {
-            // Hide all views
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-matakuliah').classList.add('hidden');
             document.getElementById('view-course-detail').classList.add('hidden');
-            document.getElementById('view-kuis-direct').classList.add('hidden');
-            document.getElementById('view-uts-direct').classList.add('hidden');
 
-            // Reset navigation menu styles
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('bg-sky-50', 'text-sky-600');
                 el.classList.add('text-slate-600');
@@ -796,36 +1192,26 @@
             } else if (view === 'matakuliah') {
                 document.getElementById('view-matakuliah').classList.remove('hidden');
                 document.getElementById('nav-matakuliah').classList.add('bg-sky-50', 'text-sky-600');
-            } else if (view === 'kuis-direct') {
-                document.getElementById('view-kuis-direct').classList.remove('hidden');
-                document.getElementById('nav-kuis').classList.add('bg-sky-50', 'text-sky-600');
-            } else if (view === 'uts-direct') {
-                document.getElementById('view-uts-direct').classList.remove('hidden');
-                document.getElementById('nav-uts').classList.add('bg-sky-50', 'text-sky-600');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // OPEN COURSE DETAIL VIEW
-        function openCourseDetail(defaultTab = 'materi') {
+        // OPEN COURSE DETAIL
+        function openCourseDetail(tab = 'materi') {
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-matakuliah').classList.add('hidden');
-            document.getElementById('view-kuis-direct').classList.add('hidden');
-            document.getElementById('view-uts-direct').classList.add('hidden');
-            
             document.getElementById('view-course-detail').classList.remove('hidden');
-            
-            // Highlight nav matakuliah
+
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('bg-sky-50', 'text-sky-600'));
             document.getElementById('nav-matakuliah').classList.add('bg-sky-50', 'text-sky-600');
 
-            switchCourseTab(defaultTab);
+            switchCourseTab(tab);
             selectMeeting(1);
             selectQuizMeeting(1);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // SWITCH TABS INSIDE COURSE DETAIL
+        // SWITCH TAB IN COURSE DETAIL
         function switchCourseTab(tab) {
             const btnMateri = document.getElementById('tab-btn-materi');
             const btnKuis = document.getElementById('tab-btn-kuis');
@@ -835,7 +1221,6 @@
             const contentKuis = document.getElementById('course-tab-kuis');
             const contentUts = document.getElementById('course-tab-uts');
 
-            // Reset active classes
             [btnMateri, btnKuis, btnUts].forEach(btn => {
                 btn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-sky-600 hover:bg-slate-50";
             });
@@ -856,7 +1241,7 @@
             }
         }
 
-        // SELECT MEETING CONTENT (MATERI)
+        // SELECT MEETING ARTICLE
         function selectMeeting(num) {
             document.querySelectorAll('.meeting-selector-btn').forEach(btn => {
                 btn.className = "meeting-selector-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition";
@@ -866,14 +1251,7 @@
 
             const data = meetingsData[num];
             const body = document.getElementById('meeting-content-body');
-            body.innerHTML = `
-                <div class="border-b border-slate-100 pb-4">
-                    <span class="bg-sky-100 text-sky-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">${data.badge}</span>
-                    <h3 class="text-xl font-extrabold text-slate-900 mt-2">${data.title}</h3>
-                    <p class="text-xs text-slate-500">${data.subtitle}</p>
-                </div>
-                ${data.html}
-            `;
+            body.innerHTML = data.html;
         }
 
         // SELECT QUIZ MEETING
@@ -894,21 +1272,21 @@
 
             let quizHTML = `
                 <div class="border-b border-slate-100 pb-3">
-                    <h4 class="font-bold text-slate-900 text-base">Evaluasi Kuis - ${data.badge}</h4>
-                    <p class="text-xs text-slate-500">Jawab pertanyaan berikut untuk menguji tingkat pemahaman Anda</p>
+                    <h4 class="font-bold text-slate-900 text-lg">Evaluasi Kuis - ${data.badge}</h4>
+                    <p class="text-xs text-slate-500">Uji pemahaman Anda atas materi ${data.title}</p>
                 </div>
-                <form id="quiz-form-${num}" onsubmit="handleQuizSubmit(event, ${num})" class="space-y-5 pt-2">
+                <form id="quiz-form-${num}" onsubmit="handleQuizSubmit(event, ${num})" class="space-y-6 pt-2">
             `;
 
             data.quiz.forEach((qObj, idx) => {
                 quizHTML += `
                     <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                        <p class="font-bold text-xs sm:text-sm text-slate-800">${idx + 1}. ${qObj.q}</p>
+                        <p class="font-bold text-sm text-slate-800">${idx + 1}. ${qObj.q}</p>
                         <div class="space-y-2">
                 `;
                 qObj.options.forEach((opt, oIdx) => {
                     quizHTML += `
-                        <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-sky-50 transition text-xs text-slate-700">
+                        <label class="flex items-center gap-3 p-3.5 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-sky-50 transition text-xs sm:text-sm text-slate-700 font-medium">
                             <input type="radio" name="q_${idx}" value="${oIdx}" required class="w-4 h-4 text-sky-600 border-slate-300">
                             <span>${opt}</span>
                         </label>
@@ -918,7 +1296,7 @@
             });
 
             quizHTML += `
-                    <button type="submit" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-2xl text-xs sm:text-sm shadow transition">
+                    <button type="submit" class="w-full py-3.5 bg-sky-600 hover:bg-sky-700 text-white font-extrabold rounded-2xl text-sm shadow transition">
                         Submit Jawaban
                     </button>
                 </form>
@@ -944,10 +1322,10 @@
                 if (isCorrect) correct++;
 
                 details += `
-                    <div class="p-4 rounded-2xl border ${isCorrect ? 'bg-emerald-50 border-emerald-200' : 'bg-red-50 border-red-200'} text-xs space-y-1">
+                    <div class="p-4 rounded-2xl border ${isCorrect ? 'bg-emerald-50 border-emerald-200' : 'bg-red-50 border-red-200'} text-xs sm:text-sm space-y-1">
                         <p class="font-bold ${isCorrect ? 'text-emerald-900' : 'text-red-900'}">Soal ${idx + 1}: ${isCorrect ? '✓ Benar' : '✗ Salah'}</p>
-                        <p class="text-slate-700">${qObj.q}</p>
-                        <p class="text-[11px] text-slate-600 pt-1"><strong>Penjelasan:</strong> ${qObj.exp}</p>
+                        <p class="text-slate-800 font-medium">${qObj.q}</p>
+                        <p class="text-xs text-slate-600 pt-1"><strong>Pembahasan:</strong> ${qObj.exp}</p>
                     </div>
                 `;
             });
@@ -956,28 +1334,13 @@
             const resContainer = document.getElementById(`quiz-result-${num}`);
 
             resContainer.innerHTML = `
-                <div class="p-5 rounded-2xl bg-slate-900 text-white text-center space-y-1">
-                    <span class="text-xs text-sky-400 font-bold uppercase">Hasil Skor Kuis</span>
-                    <h3 class="text-2xl font-extrabold text-amber-400">${score} / 100</h3>
+                <div class="p-6 rounded-2xl bg-slate-900 text-white text-center space-y-1">
+                    <span class="text-xs text-sky-400 font-bold uppercase tracking-wider">Hasil Skor Kuis Anda</span>
+                    <h3 class="text-3xl font-extrabold text-amber-400">${score} / 100</h3>
                 </div>
-                <div class="space-y-2 pt-2">${details}</div>
+                <div class="space-y-3 pt-2">${details}</div>
             `;
             resContainer.classList.remove('hidden');
-        }
-
-        // TOGGLE MOBILE SIDEBAR
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('hidden');
-        }
-
-        // FILTER SEARCH
-        function filterCourseCards() {
-            const q = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('#matakuliah-card-list > div');
-            cards.forEach(c => {
-                c.style.display = c.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
-            });
         }
     </script>
 </body>
