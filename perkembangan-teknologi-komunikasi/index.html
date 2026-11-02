@@ -241,7 +241,7 @@
                             <div>
                                 <div class="flex items-center justify-between mb-4">
                                     <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">3 SKS • Gasal 2026/2027</span>
-                                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">5 Pertemuan Ready</span>
+                                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">6 Pertemuan Ready</span>
                                 </div>
                                 <h4 class="text-xl font-extrabold text-slate-900 group-hover:text-sky-600 transition mb-2">
                                     Perkembangan Teknologi Komunikasi
@@ -298,10 +298,10 @@
                             Perkembangan Teknologi Komunikasi
                         </h3>
                         <p class="text-xs text-slate-600 leading-relaxed mb-6">
-                            Website static ini menampung seluruh materi perkuliahan 5 pertemuan secara mendalam dan terstruktur lengkap tanpa ada poin yang terlewat.
+                            Website static ini menampung seluruh materi perkuliahan 6 pertemuan secara mendalam dan terstruktur lengkap tanpa ada poin yang terlewat.
                         </p>
                         <div class="flex items-center justify-between text-xs font-bold text-sky-600 pt-4 border-t border-slate-100">
-                            <span>Buka Perkuliahan (P1 - P5)</span>
+                            <span>Buka Perkuliahan (P1 - P6)</span>
                             <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
                         </div>
                     </div>
@@ -335,7 +335,7 @@
                 <div class="flex border-b border-slate-200 bg-white rounded-2xl p-1.5 shadow-xs">
                     <button onclick="switchCourseTab('materi')" id="tab-btn-materi" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 bg-sky-600 text-white shadow-sm">
                         <i class="fa-solid fa-newspaper text-base"></i>
-                        <span>Materi Artikel (P1 - P5)</span>
+                        <span>Materi Artikel (P1 - P6)</span>
                     </button>
                     <button onclick="switchCourseTab('kuis')" id="tab-btn-kuis" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:text-sky-600 hover:bg-slate-50">
                         <i class="fa-solid fa-list-check text-base"></i>
@@ -356,6 +356,7 @@
                         <button onclick="selectMeeting(3)" id="m-btn-3" class="meeting-selector-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Pertemuan 3</button>
                         <button onclick="selectMeeting(4)" id="m-btn-4" class="meeting-selector-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Pertemuan 4</button>
                         <button onclick="selectMeeting(5)" id="m-btn-5" class="meeting-selector-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Pertemuan 5</button>
+                        <button onclick="selectMeeting(6)" id="m-btn-6" class="meeting-selector-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Pertemuan 6</button>
                     </div>
 
                     <!-- Article Body Display Container (News Portal Article Style) -->
@@ -372,6 +373,7 @@
                         <button onclick="selectQuizMeeting(3)" id="q-m-btn-3" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P3</button>
                         <button onclick="selectQuizMeeting(4)" id="q-m-btn-4" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P4</button>
                         <button onclick="selectQuizMeeting(5)" id="q-m-btn-5" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P5</button>
+                        <button onclick="selectQuizMeeting(6)" id="q-m-btn-6" class="quiz-m-btn px-4 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition">Kuis P6</button>
                     </div>
 
                     <div id="quiz-content-body" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm space-y-6">
@@ -1170,6 +1172,179 @@
                         ],
                         correct: 0,
                         exp: "Thomas dan Loader (2000) mendefinisikan cybercrime sebagai tindakan dimediasi komputer yang melanggar hukum/norma di ruang elektronik."
+                    }
+                ]
+            },
+
+            6: {
+                badge: "Pertemuan 6",
+                title: "AI dan Perkembangan Teknologi",
+                lecturer: "Musfiah Saidah, M. Si",
+                html: `
+                    <!-- Header Editorial -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Materi Pertemuan 6</span>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 leading-tight">
+                            AI dan Perkembangan Teknologi
+                        </h1>
+                        <p class="text-sm font-semibold text-sky-600 mt-2">Oleh : Musfiah Saidah, M. Si</p>
+                    </div>
+
+                    <div class="article-body space-y-6">
+                        <!-- Intro Quote -->
+                        <div class="p-6 bg-slate-900 text-white rounded-3xl space-y-3 shadow-md">
+                            <p class="text-lg sm:text-xl text-slate-200 leading-relaxed font-serif italic text-center">
+                                "Siapa yang pernah menggunakan ChatGPT, Gemini, Copilot, atau AI lainnya untuk mencari referensi penelitian?<br><br>Apakah informasi yang diberikan AI selalu benar?<br>Jika salah, bagaimana kita mengetahuinya?"
+                            </p>
+                        </div>
+
+                        <!-- Media Ecology -->
+                        <p class="drop-cap pt-2">
+                            <strong>Media Ecology</strong> yang digagas oleh Marshall McLuhan mengajak kita untuk mempelajari bagaimana media, teknologi, dan proses komunikasi membentuk lingkungan hidup, cara berpikir, perasaan, serta struktur sosial manusia. 
+                        </p>
+
+                        <!-- Core Concept Block -->
+                        <div class="p-6 bg-indigo-50 border border-indigo-200 rounded-2xl text-center shadow-sm">
+                            <h3 class="text-lg sm:text-xl font-black text-indigo-900 tracking-wide uppercase">AI DIBANGUN OLEH MANUSIA, DATA, DAN NILAI-NILAI TERTENTU</h3>
+                        </div>
+
+                        <!-- Bias -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-rose-600 pl-3">Apa itu Bias dalam AI?</h3>
+                            <p>
+                                <strong>Bias</strong> adalah kecenderungan sistem menghasilkan representasi yang tidak seimbang. Dalam ekosistem data, sering kali terjadi kesenjangan yang signifikan antara <em>Minority data</em> (data kelompok minoritas yang kurang terwakili) dan <em>Majority data</em> (data dominan).
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                 <div class="p-5 bg-white border border-slate-200 rounded-2xl shadow-xs">
+                                     <strong class="text-slate-900 block mb-1">Jenis-jenis Bias AI</strong>
+                                     <p class="text-sm text-slate-700 leading-relaxed">Algoritma dapat mewarisi bias historis, bias representasi, dan bias algoritmis dari pembuatnya, yang dapat melahirkan pandangan stereotip.</p>
+                                 </div>
+                                 <div class="p-5 bg-white border border-slate-200 rounded-2xl shadow-xs">
+                                     <strong class="text-slate-900 block mb-1">What gets left out?</strong>
+                                     <p class="text-sm text-slate-700 leading-relaxed">Pertanyaan kritis tentang siapa dan apa yang diabaikan oleh AI, yang akan berdampak langsung pada bias <em>AI dan Produksi Pengetahuan</em>.</p>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Keterbatasan -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-amber-500 pl-3">Keterbatasan AI</h3>
+                            <ul class="list-disc pl-6 space-y-2 text-slate-700 text-base">
+                                <li><strong>Hallucination (Halusinasi):</strong> Kecenderungan AI memberikan jawaban yang terdengar meyakinkan namun faktanya salah atau dikarang.</li>
+                                <li><strong>Keterbatasan Konteks:</strong> AI tidak memahami nuansa budaya atau konteks spesifik dari sebuah komunitas layaknya manusia.</li>
+                                <li><strong>Tidak Memiliki Pengalaman Manusia:</strong> AI memproses teks berdasarkan probabilitas statistik dan pattern bahasa, bukan dari empati, pengalaman, atau kesadaran.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Risiko Penelitian -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-red-600 pl-3">Risiko Penggunaan AI dalam Penelitian</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-sm font-bold text-red-950">
+                                <div class="p-4 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center">AI Halusinasi</div>
+                                <div class="p-4 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center">Pemrosesan Sintaksis Cepat (Instan)</div>
+                                <div class="p-4 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center">Referensi Palsu (Kutipan fiktif)</div>
+                                <div class="p-4 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center">Plagiarism</div>
+                                <div class="p-4 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center col-span-1 sm:col-span-2 text-red-800">Ketergantungan Intelektual (Lumpuhnya Nalar dan sintesis mandiri)</div>
+                            </div>
+                        </div>
+
+                        <!-- Perspektif Komunikasi -->
+                        <div class="space-y-4 pt-2">
+                            <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-sky-600 pl-3">Perspektif Ilmu Komunikasi</h3>
+                            <p>Ilmu Komunikasi membedah fenomena AI melalui kacamata kritis berikut:</p>
+                            <div class="flex flex-wrap gap-3 mt-2">
+                                <span class="px-5 py-2.5 bg-slate-100 text-slate-800 rounded-xl font-bold border border-slate-200">Political Economy</span>
+                                <span class="px-5 py-2.5 bg-slate-100 text-slate-800 rounded-xl font-bold border border-slate-200">Critical Theory</span>
+                                <span class="px-5 py-2.5 bg-slate-100 text-slate-800 rounded-xl font-bold border border-slate-200">Framing</span>
+                                <span class="px-5 py-2.5 bg-slate-100 text-slate-800 rounded-xl font-bold border border-slate-200">Representation</span>
+                            </div>
+                        </div>
+
+                        <!-- Panduan -->
+                        <div class="bg-emerald-900 text-white p-8 rounded-3xl text-center space-y-5 mt-8 shadow-md">
+                            <h3 class="text-xl font-black text-emerald-400">AI UNTUK PENELITI KOMUNIKASI</h3>
+                            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 font-black text-lg sm:text-xl">
+                                <span class="text-emerald-50">Use AI intelligently.</span>
+                                <span class="hidden sm:inline text-emerald-500">•</span>
+                                <span class="text-emerald-50">Question AI critically.</span>
+                                <span class="hidden sm:inline text-emerald-500">•</span>
+                                <span class="text-emerald-50">Research responsibly.</span>
+                            </div>
+                            <div class="pt-5 border-t border-emerald-800 text-sm font-bold text-emerald-200 uppercase tracking-widest">
+                                Refleksi dan Penutup: Pahami fungsinya. Jaga Integritas Manusianya.
+                            </div>
+                        </div>
+
+                        <!-- Tugas Game Socratic -->
+                        <div class="mt-12 p-1.5 bg-gradient-to-br from-amber-400 via-orange-500 to-rose-600 rounded-[2.5rem] shadow-xl">
+                            <div class="bg-white rounded-[2.35rem] p-6 sm:p-10 space-y-5 h-full">
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 border-b border-slate-200 pb-5">
+                                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-[1.25rem] flex items-center justify-center text-3xl shadow-inner shrink-0">
+                                        <i class="fa-solid fa-gamepad"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-black uppercase tracking-wider text-amber-600 block mb-1">Evaluasi Interaktif</span>
+                                        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">Tugas Game: Socratic Dialogue dengan AI</h3>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-slate-700 leading-relaxed text-base pt-2">
+                                    Mahasiswa diminta melakukan dialog interaktif dengan AI menggunakan <strong>Metode Socrates</strong>, yaitu pendekatan pembelajaran melalui pertanyaan kritis untuk menggali, menguji, dan memperdalam pemahaman terhadap suatu konsep atau persoalan. 
+                                </p>
+                                <p class="text-slate-700 leading-relaxed text-base">
+                                    Mahasiswa wajib melampirkan bukti proses percakapan dengan AI berupa screenshot yang menunjukkan rangkaian pertanyaan dan jawaban selama diskusi. Selanjutnya, mahasiswa menyusun <strong>analisis minimal 2 paragraf</strong> berdasarkan hasil percakapan tersebut. Analisis harus memuat temuan utama, pemahaman baru yang diperoleh, serta refleksi kritis terhadap jawaban AI. Mahasiswa tidak cukup hanya menyalin jawaban AI, tetapi harus mampu mengevaluasi, mengembangkan argumen, dan menunjukkan pemikiran kritis secara mandiri.
+                                </p>
+
+                                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 mt-6">
+                                    <h4 class="font-extrabold text-slate-900 mb-4 flex items-center gap-2 text-lg">
+                                        <i class="fa-solid fa-list-check text-sky-600"></i> Poin Pengumpulan Tugas
+                                    </h4>
+                                    <ul class="space-y-3 text-[15px] text-slate-800 font-semibold">
+                                        <li class="flex items-start gap-3">
+                                            <i class="fa-solid fa-check text-emerald-500 text-lg mt-0.5"></i> 
+                                            Berikan bukti hasil percakapan dengan AI melalui screen shoot
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fa-solid fa-check text-emerald-500 text-lg mt-0.5"></i> 
+                                            Berikan analisa dalam minimal 2 paragraf terkait temuan yang didapatkan
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fa-solid fa-check text-emerald-500 text-lg mt-0.5"></i> 
+                                            Berikan bukti tautan percakapan
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fa-solid fa-check text-emerald-500 text-lg mt-0.5"></i> 
+                                            Dikumpulkan di gdrive yang disediakan
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                `,
+                quiz: [
+                    {
+                        q: "Apakah yang dimaksud dengan 'Hallucination' (Halusinasi) dalam konteks Artificial Intelligence?",
+                        options: [
+                            "Kecenderungan AI memberikan jawaban yang terdengar meyakinkan namun faktanya salah atau dikarang.",
+                            "Kemampuan AI untuk membaca pikiran dan emosi manusia secara akurat.",
+                            "Kondisi ketika server AI mengalami kerusakan fisik dan terbakar.",
+                            "Fitur AI yang secara otomatis merangkum jurnal penelitian dengan sumber yang selalu valid."
+                        ],
+                        correct: 0,
+                        exp: "Hallucination (Halusinasi) AI merujuk pada situasi ketika sistem menghasilkan teks yang tampak meyakinkan, namun secara faktual salah, tidak akurat, atau bahkan mengarang kutipan palsu."
+                    },
+                    {
+                        q: "Manakah di bawah ini yang merupakan pendekatan yang disarankan bagi peneliti komunikasi terhadap AI, sesuai materi Pertemuan 6?",
+                        options: [
+                            "Menggunakan AI untuk menulis seluruh paper agar lebih instan.",
+                            "Use AI intelligently, question AI critically, and research responsibly.",
+                            "Mempercayai semua data yang dikeluarkan AI tanpa memverifikasi sumbernya.",
+                            "Menghindari AI sama sekali karena penuh dengan bias dan tidak berguna."
+                        ],
+                        correct: 1,
+                        exp: "Peneliti komunikasi disarankan untuk: Use AI intelligently (menggunakan secara cerdas), Question AI critically (mempertanyakan secara kritis), dan Research responsibly (meneliti dengan penuh tanggung jawab)."
                     }
                 ]
             }
