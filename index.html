@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device</head>-width, initial-scale=1.0">
+    <meta name="description" content="Materi kuliah, kuis latihan, dan panduan ujian bersama Musfiah Saidah, M.Si.">
+    <meta name="theme-color" content="#0056d2">
+    <title>Musfiah Center — Portal Perkuliahan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-font-mode="sans" data-text-size="md" data-view="catalog">
+    <a class="skip-link" href="#portal-main-view">Langsung ke konten</a>
+    <div class="institution-bar">Portal perkuliahan <span>Musfiah Saidah, M.Si</span></div>
+    <header class="site-header">
+        <div class="header-inner">
+            <button type="button" id="sidebar-toggle" class="menu-toggle" onclick="PortalApp.toggleSidebar()" aria-controls="portal-sidebar" aria-expanded="false" aria-label="Buka navigasi modul" hidden>
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <a class="brand" href="./" onclick="event.preventDefault(); PortalApp.navigateHome()">musfiah<span>center</span></a>
+            <nav class="header-nav" aria-label="Navigasi utama">
+                <a href="./" onclick="event.preventDefault(); PortalApp.navigateHome()" id="catalog-link">Mata kuliah</a>
+            </nav>
+            <div class="reading-controls" aria-label="Pengaturan bacaan">
+                <span class="control-label">Ukuran teks</span>
+                <div class="control-group" role="group" aria-label="Ukuran teks bacaan">
+                    <button type="button" data-pref-size="sm" onclick="PortalApp.setTextSize('sm')" aria-label="Teks kecil">A−</button>
+                    <button type="button" data-pref-size="md" onclick="PortalApp.setTextSize('md')" aria-label="Teks standar">A</button>
+                    <button type="button" data-pref-size="lg" onclick="PortalApp.setTextSize('lg')" aria-label="Teks besar">A+</button>
+                </div>
+                <details class="font-settings">
+                    <summary>Huruf</summary>
+                    <div class="font-options" role="group" aria-label="Jenis huruf bacaan">
+                        <button type="button" data-pref-font="sans" onclick="PortalApp.setFontMode('sans')">Sans-serif</button>
+                        <button type="button" data-pref-font="serif" onclick="PortalApp.setFontMode('serif')">Serif</button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </header>
+    <div class="portal-workspace">
+        <button type="button" id="sidebar-backdrop" class="sidebar-backdrop" onclick="PortalApp.toggleSidebar()" aria-label="Tutup navigasi modul" hidden></button>
+        <aside id="portal-sidebar" class="course-sidebar" aria-label="Navigasi mata kuliah" hidden>
+            <div class="sidebar-top"><strong>Konten mata kuliah</strong><button type="button" class="sidebar-close" onclick="PortalApp.toggleSidebar()" aria-label="Tutup navigasi modul">×</button></div>
+            <nav id="sidebar-curriculum" aria-label="Modul dan evaluasi"></nav>
+            <div class="sidebar-footer">Belajar bersama<br><strong>Musfiah Saidah, M.Si</strong></div>
+        </aside>
+        <main id="portal-main-view" tabindex="-1"><p class="loading-message">Memuat mata kuliah…</p></main>
+    </div>
+    <footer class="site-footer"><a class="brand" href="./">musfiah<span>center</span></a><p>Materi perkuliahan · Latihan mandiri · Panduan ujian</p></footer>
+    <noscript><p>Aktifkan JavaScript untuk membuka materi dan mengerjakan kuis di portal ini.</p></noscript>
+    <script src="data/courses-registry.js"></script>
+    <script src="data/courses/perkembangan-teknologi-komunikasi/meetings.js"></script>
+    <script src="data/courses/perkembangan-teknologi-komunikasi/quizzes.js"></script>
+    <script src="data/courses/perkembangan-teknologi-komunikasi/exams.js"></script>
+    <script src="data/courses/komunikasi-persuasif/meetings.js"></script>
+    <script src="data/courses/komunikasi-persuasif/quizzes.js"></script>
+    <script src="data/courses/komunikasi-persuasif/exams.js"></script>
+    <script src="assets/js/components/renderer.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

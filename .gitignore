@@ -1,0 +1,4 @@
+# Abaikan file sumber PDF mentah dan hasil ekstraksi lokal di semua folder mata kuliah
+**/pdf/
+**/extracted/
+.DS_Store
