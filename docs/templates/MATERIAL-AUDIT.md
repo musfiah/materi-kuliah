@@ -91,7 +91,7 @@ Tuliskan **perintah/langkah, hasil aktual, dan batasannya**. Tanda centang tanpa
 | Semua aset publik ada dan tidak diabaikan Git | [cek path dan aturan ignore] | [hasil] | Belum |
 | Desktop 1440 px dan tablet 768 px | [browser/perangkat] | [hasil] | Belum |
 | Ponsel 390 px, sidebar/drawer dan tabel/gambar | [browser/perangkat] | [hasil] | Belum |
-| Ukuran teks A+ dan zoom browser 200% | [langkah] | [overflow/keterbacaan] | Belum |
+| Zoom browser 200% | [langkah] | [overflow/keterbacaan] | Belum |
 | Keyboard, fokus, daftar isi, alt/caption | [langkah] | [hasil] | Belum |
 | Navigasi pertemuan, URL langsung/refresh/link lama | [URL relatif yang diuji] | [hasil] | Belum |
 | Kuis benar/salah, skor dan pembahasan | [skenario terkait] | [hasil] | Belum |

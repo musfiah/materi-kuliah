@@ -40,7 +40,7 @@ materi-kuliah/
 │   ├── css/
 │   │   └── main.css                 # Tema platform belajar, layout responsif, dan gaya bacaan
 │   └── js/
-│       ├── app.js                   # State controller, URL routing, & preferensi baca mahasiswa
+│       ├── app.js                   # State controller, URL routing, sidebar, & penilaian kuis
 │       └── components/
 │           └── renderer.js          # Komponen perender UI (Katalog, Ruang Baca, Kuis, UTS/UAS)
 ├── data/
@@ -50,15 +50,19 @@ materi-kuliah/
 │       │   ├── meetings.js          # Materi bacaan per pertemuan (Pertemuan 1 - 5)
 │       │   ├── quizzes.js           # Soal kuis evaluasi interaktif per pertemuan
 │       │   └── exams.js             # Panduan & soal UTS maupun UAS
-│       └── komunikasi-persuasif/
-│           ├── meetings.js          # Modul materi per pertemuan Komunikasi Persuasif
-│           ├── quizzes.js           # Modul kuis evaluasi Komunikasi Persuasif
-│           └── exams.js             # Modul UTS & UAS Komunikasi Persuasif
+│       ├── komunikasi-persuasif/
+│       │   ├── meetings.js          # Modul materi per pertemuan Komunikasi Persuasif
+│       │   ├── quizzes.js           # Modul kuis evaluasi Komunikasi Persuasif
+│       │   └── exams.js             # Modul UTS & UAS Komunikasi Persuasif
+│       └── manajemen-media-penyiaran/   # meetings.js, quizzes.js, exams.js
 ├── perkembangan-teknologi-komunikasi/
 │   ├── index.html                   # Redirect otomatis ke ../?course=perkembangan-teknologi-komunikasi
 │   └── pdf/                         # Berkas slide PDF mentah (diabaikan oleh Git)
 ├── komunikasi-persuasif/
 │   ├── index.html                   # Redirect otomatis ke ../?course=komunikasi-persuasif
+│   └── pdf/                         # Berkas slide PDF mentah (diabaikan oleh Git)
+├── manajemen-media-penyiaran/
+│   ├── index.html                   # Redirect otomatis ke ../?course=manajemen-media-penyiaran
 │   └── pdf/                         # Berkas slide PDF mentah (diabaikan oleh Git)
 └── lawas/                           # Arsip versi lama (bukan bagian portal; jangan diubah)
     └── perkembangan-teknologi-komunikasi/
@@ -125,6 +129,7 @@ Buka berkas `data/courses/<nama-matkul>/exams.js`, ubah `available: true` pada o
 
 ## Status materi dan batas dokumentasi
 
+- Manajemen Media Penyiaran dikonversi dari tiga PDF (172 halaman) menjadi 9 pertemuan (pembagian per topik disetujui pemilik) dan satu kuis pilihan ganda; nama/NIM mahasiswa tidak dipublikasikan. Audit di [docs/content/manajemen-media-penyiaran/](docs/content/manajemen-media-penyiaran/README.md).
 - `lawas/` berisi arsip halaman lama Perkembangan Teknologi Komunikasi (desain dan konten sebelum portal baru), disalin apa adanya dari commit `a322234`. Halaman ini terbit di GitHub Pages tetapi tidak ditautkan dari portal; tidak mengikuti `docs/DESIGN.md` dan **tidak boleh diubah** atau dijadikan acuan desain. Materinya belum dibandingkan dengan modul data yang baru.
 
 - Modul data Perkembangan Teknologi Komunikasi memuat lima pertemuan hasil pekerjaan sebelumnya. Keberadaan data tersebut **bukan bukti seluruh halaman/gambar PDF sudah diaudit lengkap**; belum ada audit per halaman pada struktur dokumentasi ini.

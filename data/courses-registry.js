@@ -38,5 +38,16 @@ window.PortalData.courseCatalog = [
         category: 'Mata Kuliah Wajib',
         status: 'active',
         summary: 'Mempelajari pengertian dan teori persuasi (ELM, Social Judgment Theory), unsur-unsur komunikasi persuasif, kredibilitas sumber, pesan dan model AIDA, saluran dan ragam media, difusi inovasi, hambatan, strategi, serta teknik komunikasi persuasif, dilengkapi kuis review menjelang UAS.'
+    },
+    {
+        slug: 'manajemen-media-penyiaran',
+        code: 'KPI-MMP',
+        title: 'Manajemen Media Penyiaran',
+        lecturer: 'Musfiah Saidah, M.Si',
+        credits: '3 SKS',
+        semester: 'Gasal 2026/2027',
+        category: 'Mata Kuliah Wajib',
+        status: 'active',
+        summary: 'Mempelajari fungsi dan prinsip manajemen media (POAC, SWOT, pengambilan keputusan), idealisme dan realitas industri, dinamika industri media (konvergensi, industrialisasi, konglomerasi), nilai ekonomi dan komodifikasi informasi, new media, tata kelola dan regulasi penyiaran, serta manajemen televisi dan radio.'
     }
 ];

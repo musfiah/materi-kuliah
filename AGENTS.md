@@ -15,7 +15,7 @@ Berlaku untuk seluruh repositori. Baca dokumen ini sebelum mengubah kode, desain
 - **Desain terinspirasi Coursera sudah disetujui:** biru-putih, font Lato, kartu kursus, sidebar modul, area baca lapang. Bukan salinan merek Coursera.
 - Jangan kembali ke desain lama krem/terracotta, judul serif editorial, metadata monospace, atau menambahkan gradien pelangi, dekorasi berlebihan, dan kartu bertumpuk tanpa kebutuhan.
 - Jangan mengganti font, warna utama, kerangka navigasi, atau framework hanya karena sedang menambah materi.
-- Pertahankan pengatur ukuran teks, opsi font bacaan, daftar isi, navigasi pertemuan, kuis beserta pembahasan, dan cetak PDF.
+- Pertahankan daftar isi, navigasi pertemuan, kuis beserta pembahasan, dan cetak PDF. Pengatur ukuran teks dan pilihan font di header **sengaja dihapus atas permintaan pemilik (2026-11-23)**; jangan menambahkannya kembali tanpa permintaan. Pembaca memakai zoom browser.
 - Jangan menampilkan rating, jumlah peserta, progres, SKS, dosen, jadwal, atau status ketersediaan yang dibuat-buat. Fakta metadata harus bersumber atau dikonfirmasi.
 
 ## Arsitektur dan publikasi
@@ -24,7 +24,7 @@ Berlaku untuk seluruh repositori. Baca dokumen ini sebelum mengubah kode, desain
 - `index.html`: kerangka portal dan pemuatan script.
 - `assets/css/main.css`: sumber utama token dan komponen desain.
 - `assets/js/components/renderer.js`: template tampilan bersama.
-- `assets/js/app.js`: navigasi/state, preferensi, sidebar, dan penilaian kuis.
+- `assets/js/app.js`: navigasi/state, sidebar, dan penilaian kuis.
 - `data/courses-registry.js`: metadata dan daftar mata kuliah.
 - `data/courses/<slug>/meetings.js`, `quizzes.js`, `exams.js`: data akademik per mata kuliah.
 - Gunakan pola JavaScript yang sudah ada (`window.PortalData`, `window.PortalRenderer`, `window.PortalApp`). Hindari duplikasi engine atau monolit HTML baru per mata kuliah.

@@ -130,7 +130,7 @@ Sanitasi SVG/HTML yang diambil dari sumber; jangan memasukkan script, handler, a
 2. Pastikan semua halaman cakupan ada pada audit; seluruh visual informatif punya tujuan web dan status verifikasi.
 3. Periksa seluruh path aset, pencatatan Git, alt/caption, tautan sumber, dan kelengkapan daftar pustaka.
 4. Jalankan `node --check` untuk semua JavaScript yang berubah; lakukan pengujian browser sesuai [checklist desain](DESIGN.md).
-5. Uji desktop, ponsel 390 px, ukuran teks terbesar, zoom browser, keyboard, daftar isi, navigasi pertemuan, kuis, dan cetak PDF. Diagram tetap terbaca; scroll tabel tidak menyebabkan seluruh halaman melebar.
+5. Uji desktop, ponsel 390 px, zoom browser 200%, keyboard, daftar isi, navigasi pertemuan, kuis, dan cetak PDF. Diagram tetap terbaca; scroll tabel tidak menyebabkan seluruh halaman melebar.
 6. Pastikan gaya cetak tidak memotong diagram/gambar atau menghilangkan isi yang tersembunyi di komponen interaktif.
 7. Jika PDF sumber diganti, cocokkan identitas/versi/hash; audit lama tidak otomatis berlaku. Periksa ulang halaman dan aset terkait serta kelengkapan sumber baru.
 8. Laporkan halaman yang selesai, jumlah aset yang digunakan, validasi nyata, izin atau informasi yang masih perlu konfirmasi. Bedakan “dikonversi”, “ditinjau visual”, dan “terverifikasi”.

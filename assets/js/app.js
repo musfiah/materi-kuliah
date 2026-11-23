@@ -7,22 +7,8 @@ window.PortalApp = (function () {
     const mobileQuery = window.matchMedia('(max-width: 1023px)');
     const state = {
         view: 'catalog', activeCourseSlug: catalog[0].slug, activeTab: 'materi',
-        activeMeeting: 1, activeQuiz: 1, activeExam: 'uts', sidebarOpen: !mobileQuery.matches,
-        fontMode: readPreference('portal_font_mode', ['sans', 'serif'], 'sans'),
-        textSize: readPreference('portal_text_size', ['sm', 'md', 'lg'], 'md')
+        activeMeeting: 1, activeQuiz: 1, activeExam: 'uts', sidebarOpen: !mobileQuery.matches
     };
-
-    function readPreference(key, allowed, fallback) {
-        try {
-            const value = localStorage.getItem(key);
-            return allowed.includes(value) ? value : fallback;
-        } catch { return fallback; }
-    }
-
-    function savePreference(key, value) {
-        // Private browsing or storage policies must not block access to course content.
-        try { localStorage.setItem(key, value); } catch { /* Preference lasts for this visit. */ }
-    }
 
     function escapeHtml(value) {
         return String(value).replace(/[&<>"']/g, char => ({
@@ -54,30 +40,6 @@ window.PortalApp = (function () {
         }
         const url = location.pathname + (params.size ? '#' + params.toString() : '');
         if (location.pathname + location.search + location.hash !== url) history.pushState(null, '', url);
-    }
-
-    function applyReadingPreferences() {
-        document.body.dataset.fontMode = state.fontMode;
-        document.body.dataset.textSize = state.textSize;
-        for (const [attribute, value] of [['font', state.fontMode], ['size', state.textSize]]) {
-            document.querySelectorAll(`[data-pref-${attribute}]`).forEach(button => {
-                button.setAttribute('aria-pressed', String(button.getAttribute(`data-pref-${attribute}`) === value));
-            });
-        }
-    }
-
-    function setFontMode(mode) {
-        if (!['sans', 'serif'].includes(mode)) return;
-        state.fontMode = mode;
-        savePreference('portal_font_mode', mode);
-        applyReadingPreferences();
-    }
-
-    function setTextSize(size) {
-        if (!['sm', 'md', 'lg'].includes(size)) return;
-        state.textSize = size;
-        savePreference('portal_text_size', size);
-        applyReadingPreferences();
     }
 
     function updateSidebar() {
@@ -228,7 +190,6 @@ window.PortalApp = (function () {
 
     function init() {
         parseUrlState();
-        applyReadingPreferences();
         renderMain(false);
         window.addEventListener('popstate', () => { parseUrlState(); renderMain(false); });
         window.addEventListener('hashchange', () => { parseUrlState(); renderMain(false); });
@@ -245,6 +206,6 @@ window.PortalApp = (function () {
     }
 
     return { init, navigateHome, openCourse, switchTab, selectMeeting, selectQuiz, selectExam,
-        scrollToSection, submitQuiz, toggleSidebar, setFontMode, setTextSize };
+        scrollToSection, submitQuiz, toggleSidebar };
 })();
 document.addEventListener('DOMContentLoaded', window.PortalApp.init);

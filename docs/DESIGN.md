@@ -10,9 +10,9 @@ Baca bersama [instruksi agen proyek](../AGENTS.md) dan [alur PDF ke web](PDF-TO-
 
 Rujukan implementasi saat ini:
 
-- `assets/css/main.css`: token, kelas bersama, breakpoint, preferensi bacaan, dan aturan cetak.
+- `assets/css/main.css`: token, kelas bersama, breakpoint, dan aturan cetak.
 - `assets/js/components/renderer.js`: struktur katalog, pembaca pertemuan, kuis, dan ujian.
-- `assets/js/app.js`: navigasi, drawer, preferensi, dan perhitungan skor.
+- `assets/js/app.js`: navigasi, drawer, dan perhitungan skor.
 - `index.html`: kerangka portal, pemuatan font, aset, dan kontrol bacaan.
 
 ## Identitas visual yang harus dipertahankan
@@ -33,8 +33,8 @@ Jangan kembali ke tema krem/terracotta, latar kertas antik, atau serif sebagai i
 
 - Font standar adalah **Lato**, bobot **400, 700, 900**, dengan fallback **Arial, sans-serif** sesuai `--font-sans`. Gunakan 400 untuk bacaan, 700 untuk penekanan/kontrol, dan 900 untuk judul utama yang sudah menggunakannya.
 - UI umumnya 14–16px. Metadata ringkas dapat mengikuti ukuran 12–13px yang sudah ada; jangan mengecilkan isi utama demi memadatkan halaman.
-- `.academic-prose` memakai ukuran standar `1.0625rem` (17px pada ukuran akar 16px), tinggi baris **1.8**, dan lebar maksimum **72ch**. Mode kecil `sm` adalah `1rem` (16px); mode besar `lg` adalah `1.25rem` (20px).
-- Pertahankan kontrol ukuran dan preferensi bacaan. Pilihan serif yang sudah tersedia melalui `body[data-font-mode="serif"]` hanya alternatif bacaan yang dipilih pengguna, bukan izin mengubah seluruh UI menjadi serif.
+- `.academic-prose` memakai ukuran `1.0625rem` (17px pada ukuran akar 16px), tinggi baris **1.8**, dan lebar maksimum **72ch**.
+- Pengatur ukuran teks dan pilihan font di header **dihapus atas permintaan pemilik (2026-11-23)**. Jangan menambahkannya kembali tanpa permintaan; keterbacaan bergantung pada ukuran dasar yang lapang dan zoom browser, jadi jangan menonaktifkan atau menghambat zoom.
 - Judul harus responsif, bukan berukuran poster tetap: hero memakai `clamp(34px, 3.7vw, 50px)`, judul pertemuan `clamp(26px, 2.3vw, 34px)`, dan judul ringkasan mata kuliah `clamp(24px, 2.4vw, 34px)` dengan penyesuaian seluler yang ada.
 - Di dalam prosa, gunakan hierarki HTML yang benar: `h2` sekitar `1.45em`, `h3` `1.2em`, `h4` `1.05em`. Jangan memakai paragraf tebal sebagai pengganti semua heading atau memilih tingkat heading hanya demi ukuran visual.
 - Biarkan teks mengalir dan membungkus; jangan mengunci tinggi blok yang dapat memotong judul, terjemahan, atau teks saat diperbesar.
@@ -55,7 +55,7 @@ Gunakan nama berikut persis seperti implementasi. Kelas memberi gaya, tetapi tid
 | Kebutuhan | Kelas saat ini dan pemakaian |
 | --- | --- |
 | Kerangka portal | `.institution-bar`, `.site-header`, `.header-inner`, `.brand`, `.header-nav`, `.portal-workspace`, `.site-footer` |
-| Akses cepat dan bacaan | `.skip-link`, `.reading-controls`, `.control-group`, `.font-settings`, `.font-options` |
+| Akses cepat | `.skip-link` |
 | Tombol | `.button` dengan `.button-primary`, `.button-secondary`, atau `.button-text` |
 | Label ringkas | `.eyebrow`, `.badge`, `.badge-muted` |
 | Katalog | `.catalog-hero`, `.hero-copy`, `.catalog-section`, `.section-heading`, `.course-grid`, `.course-card` |
@@ -104,7 +104,7 @@ Kesetiaan sumber bukan penyalinan piksel PDF, dan konsistensi UI bukan alasan me
 - Berikan nama aksesibel pada kontrol ikon. Pertahankan hubungan `label`–input, `fieldset`–`legend`, `aria-controls`, `aria-expanded`, `aria-pressed`, dan `aria-current` sesuai fungsi yang sudah ada; jangan menambahkan peran ARIA yang tidak disertai perilakunya.
 - Pertahankan hasil kuis sebagai wilayah bernama dengan `aria-live="polite"`. Status benar/salah harus disampaikan lewat teks, bukan warna saja.
 - Pastikan kontras teks biasa minimal 4.5:1, teks besar 3:1, dan indikator kontrol/fokus yang relevan 3:1 terhadap warna sekitarnya. Periksa kembali saat menambah pasangan warna, terutama pada gambar atau latar berwarna.
-- Uji pembesaran teks/zoom browser setidaknya 200% dan semua mode ukuran bacaan. Jangan memotong teks, menyembunyikan fungsi penting, atau menonaktifkan zoom untuk mempertahankan tata letak.
+- Uji pembesaran teks/zoom browser setidaknya 200%. Jangan memotong teks, menyembunyikan fungsi penting, atau menonaktifkan zoom untuk mempertahankan tata letak.
 - Hormati `prefers-reduced-motion: reduce`; jangan menambah animasi, transisi, atau gulir halus yang mengabaikan preferensi itu.
 - Pertahankan gaya cetak: sembunyikan kerangka navigasi dan kontrol, gunakan isi putih dengan teks terbaca, hindari heading terpisah dari isinya, dan periksa tabel/gambar tidak terpotong. Jangan menghilangkan gambar akademik atau legenda warna yang diperlukan untuk memahami materi saat dicetak.
 
@@ -113,7 +113,7 @@ Kesetiaan sumber bukan penyalinan piksel PDF, dan konsistensi UI bukan alasan me
 - Proyek tetap situs statis HTML/CSS/JavaScript untuk **GitHub Pages**. Tidak perlu Tailwind, framework baru, bundler, langkah build, backend, atau server aplikasi untuk menjalankan hasilnya.
 - Gunakan aset dan jalur relatif yang sesuai lokasi dokumen. Hindari jalur berawalan `/` yang mengasumsikan situs berada di akar domain; uji tautan pada deployment di subdirektori repositori.
 - Gunakan komponen, token, dan pola yang sudah ada. Jangan mengganti sistem renderer atau model data hanya untuk menambah materi.
-- Perubahan visual tidak boleh merusak katalog, pembukaan mata kuliah, pemilihan pertemuan, tab materi/kuis/ujian, URL/riwayat navigasi, TOC, tombol sebelumnya/berikutnya, cetak, atau penyimpanan preferensi bacaan.
+- Perubahan visual tidak boleh merusak katalog, pembukaan mata kuliah, pemilihan pertemuan, tab materi/kuis/ujian, URL/riwayat navigasi, TOC, tombol sebelumnya/berikutnya, atau cetak.
 - Pertahankan ID dan pengait peristiwa yang dipakai aplikasi, termasuk `portal-main-view`, `portal-sidebar`, `portal-quiz-form`, dan `portal-quiz-result`, kecuali perubahan fungsi itu memang diminta dan seluruh pemanggil ikut diselaraskan.
 - Alur kuis tetap: pilih satu jawaban per soal → validasi isian wajib → periksa jawaban → tampilkan skor dan pembahasan tiap soal. Skor saat ini dihitung dengan `Math.round(jumlahBenar / jumlahSoal * 100)`. Jangan mengubah kunci jawaban, rumus, atau isi penjelasan dalam tugas desain.
 - Hasil latihan bukan nilai resmi dan tidak dikirim sebagai nilai resmi; pertahankan penjelasan ini. Jangan mengklaim progres atau skor disimpan permanen jika fungsi itu tidak tersedia.
@@ -126,9 +126,9 @@ Untuk perubahan UI, CSS, renderer, atau materi yang memengaruhi tata letak, laku
 - **768px:** sidebar masih drawer, katalog dua kolom sesuai CSS, TOC tetap lipat, tabel dan komponen materi tetap terbaca.
 - **1440px:** sidebar desktop dan TOC samping terlihat pada pembaca, lebar prosa tetap dibatasi, area bacaan tidak tertindih navigasi.
 - **Keyboard:** uji Tab/Shift+Tab, Enter/Space pada kontrol yang sesuai, Escape pada drawer, skip link, fokus terlihat, pemilihan radio, dan pengiriman kuis tanpa mouse.
-- **Bacaan:** uji mode kecil/standar/besar, preferensi font, zoom 200%, kontras, dan reduced motion. Periksa pratinjau cetak, termasuk tabel dan gambar.
+- **Bacaan:** uji zoom browser 200%, kontras, dan reduced motion. Periksa pratinjau cetak, termasuk tabel dan gambar.
 - **Isi:** bandingkan hasil dengan PDF untuk label, data, kutipan, diagram, legenda, dan makna warna; periksa tautan serta target TOC.
 - **Skor dan fungsi:** uji isian kuis yang belum lengkap, semua benar (100), semua salah (0), dan jawaban campuran dengan skor pembulatan yang sesuai. Pastikan jumlah benar, label benar/belum tepat, jawaban benar, serta pembahasan cocok; uji navigasi kembali ke materi dan perpindahan kuis.
-- **Regresi portal:** buka katalog, materi, kuis, panduan UTS/UAS, dan status belum tersedia; periksa navigasi sebelumnya/berikutnya, tombol kembali/maju browser, preferensi bacaan, serta tautan/aset relatif.
+- **Regresi portal:** buka katalog, materi, kuis, panduan UTS/UAS, dan status belum tersedia; periksa navigasi sebelumnya/berikutnya, tombol kembali/maju browser, serta tautan/aset relatif.
 
 Jangan menyatakan pengujian visual, keyboard, atau skor lulus bila belum dilakukan. Jika alat pengujian tidak tersedia, tuliskan keterbatasan dan pemeriksaan yang masih perlu dilakukan. Perubahan dokumentasi saja cukup diperiksa isi, rujukan, dan lingkup berkasnya; tidak perlu mengklaim pengujian aplikasi.

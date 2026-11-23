@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
-<body data-font-mode="sans" data-text-size="md" data-view="catalog">
+<body data-view="catalog">
     <a class="skip-link" href="#portal-main-view">Langsung ke konten</a>
     <div class="institution-bar">Portal perkuliahan <span>Musfiah Saidah, M.Si</span></div>
     <header class="site-header">
@@ -23,21 +23,6 @@
             <nav class="header-nav" aria-label="Navigasi utama">
                 <a href="./" onclick="event.preventDefault(); PortalApp.navigateHome()" id="catalog-link">Mata kuliah</a>
             </nav>
-            <div class="reading-controls" aria-label="Pengaturan bacaan">
-                <span class="control-label">Ukuran teks</span>
-                <div class="control-group" role="group" aria-label="Ukuran teks bacaan">
-                    <button type="button" data-pref-size="sm" onclick="PortalApp.setTextSize('sm')" aria-label="Teks kecil">A−</button>
-                    <button type="button" data-pref-size="md" onclick="PortalApp.setTextSize('md')" aria-label="Teks standar">A</button>
-                    <button type="button" data-pref-size="lg" onclick="PortalApp.setTextSize('lg')" aria-label="Teks besar">A+</button>
-                </div>
-                <details class="font-settings">
-                    <summary>Huruf</summary>
-                    <div class="font-options" role="group" aria-label="Jenis huruf bacaan">
-                        <button type="button" data-pref-font="sans" onclick="PortalApp.setFontMode('sans')">Sans-serif</button>
-                        <button type="button" data-pref-font="serif" onclick="PortalApp.setFontMode('serif')">Serif</button>
-                    </div>
-                </details>
-            </div>
         </div>
     </header>
     <div class="portal-workspace">
@@ -58,6 +43,9 @@
     <script src="data/courses/komunikasi-persuasif/meetings.js"></script>
     <script src="data/courses/komunikasi-persuasif/quizzes.js"></script>
     <script src="data/courses/komunikasi-persuasif/exams.js"></script>
+    <script src="data/courses/manajemen-media-penyiaran/meetings.js"></script>
+    <script src="data/courses/manajemen-media-penyiaran/quizzes.js"></script>
+    <script src="data/courses/manajemen-media-penyiaran/exams.js"></script>
     <script src="assets/js/components/renderer.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
