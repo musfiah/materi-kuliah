@@ -14,3 +14,7 @@
 - Kunci (sumber): 1 B, 2 B, 3 A, 4 B, 5 B, 6 C, 7 C, 8 A, 9 C, 10 A. Pembahasan berasal dari sumber dan diberi awalan “Pembahasan dari sumber:”.
 - Judul topik tiap soal (mis. “Nilai Ekonomi Informasi dan Komodifikasi”) digabung di depan teks soal.
 - Penyesuaian: tanda butir “•” di depan pilihan soal 10 (artefak tata letak) tidak disalin.
+
+## Pembaruan 2026-11-24
+
+Atas permintaan pemilik, kuis tidak lagi menampilkan skor, benar/salah, atau pembahasan kepada mahasiswa. Mahasiswa mengisi nama, NIM, kelas, dan semua soal; skor dan jawaban dikirim ke Google Spreadsheet dosen (lihat [docs/QUIZ-GOOGLE-SHEETS.md](../../QUIZ-GOOGLE-SHEETS.md)). Tabel kunci jawaban di tab UAS dihapus; kunci dan pembahasan tetap tersimpan di `quizzes.js` untuk perhitungan skor dan tidak ditampilkan.

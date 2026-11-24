@@ -101,7 +101,7 @@ window.PortalApp = (function () {
             const content = state.activeTab === 'materi'
                 ? window.PortalRenderer.renderMeetingReader(meta, meetings, state.activeMeeting)
                 : state.activeTab === 'kuis'
-                    ? window.PortalRenderer.renderQuizView(meta, meetings, detail.quizzes, state.activeQuiz)
+                    ? window.PortalRenderer.renderQuizView(meta, meetings, detail.quizzes, state.activeQuiz, data.quizConfig)
                     : window.PortalRenderer.renderExamView(meta, detail.exams, state.activeExam);
             container.innerHTML = `
                 <section class="course-overview" aria-label="Informasi mata kuliah">
@@ -158,27 +158,63 @@ window.PortalApp = (function () {
         document.getElementById(id)?.scrollIntoView({ behavior: 'instant', block: 'start' });
     }
 
-    function submitQuiz(event, number) {
+    function showQuizStatus(kind, message) {
+        const result = document.getElementById('portal-quiz-result');
+        result.className = `quiz-result quiz-status is-${kind}`;
+        result.textContent = message;
+        result.hidden = false;
+        result.scrollIntoView({ behavior: 'instant', block: 'center' });
+    }
+
+    async function submitQuiz(event, number) {
         event.preventDefault();
         const quiz = (courseDetail().quizzes || {})[number];
-        if (!quiz || !quiz.questions.length) return;
-        const answers = new FormData(document.getElementById('portal-quiz-form'));
-        let correctCount = 0;
-        const feedback = quiz.questions.map((question, index) => {
-            const correct = Number(answers.get(`q_${index}`)) === question.correct;
-            if (correct) correctCount++;
-            return `<section class="answer-feedback ${correct ? 'is-correct' : 'is-incorrect'}">
-                <h3>Soal ${index + 1}: ${correct ? 'Benar' : 'Belum tepat'}</h3>
-                <p>${escapeHtml(question.q)}</p>
-                <p><strong>Jawaban benar:</strong> ${escapeHtml(question.options[question.correct])}</p>
-                <p><strong>Pembahasan:</strong> ${escapeHtml(question.exp)}</p>
-            </section>`;
-        }).join('');
-        const score = Math.round(correctCount / quiz.questions.length * 100);
-        const result = document.getElementById('portal-quiz-result');
-        result.innerHTML = `<div class="score-summary"><div><p>Hasil latihan Anda</p><h2>${score}<span> / 100</span></h2><p>${correctCount} dari ${quiz.questions.length} jawaban benar. Latihan ini tidak dikirim sebagai nilai resmi.</p></div></div>${feedback}`;
-        result.hidden = false;
-        result.scrollIntoView({ behavior: 'instant', block: 'start' });
+        const form = document.getElementById('portal-quiz-form');
+        if (!quiz || !quiz.questions.length || !form.reportValidity()) return;
+        const endpoint = (data.quizConfig || {}).endpoint;
+        if (!endpoint) {
+            showQuizStatus('error', 'Pengiriman kuis belum diaktifkan oleh pengelola portal. Jawaban Anda belum terkirim.');
+            return;
+        }
+
+        const values = new FormData(form);
+        const answers = quiz.questions.map((question, index) => Number(values.get(`q_${index}`)));
+        const correctCount = answers.filter((answer, index) => answer === quiz.questions[index].correct).length;
+        // The score is recorded for the lecturer only; students see the submission status, not the result.
+        const payload = {
+            courseSlug: state.activeCourseSlug,
+            course: courseMeta().title,
+            quizId: String(number),
+            quizTitle: quiz.title,
+            nama: String(values.get('nama')).trim(),
+            nim: String(values.get('nim')).trim(),
+            kelas: String(values.get('kelas')).trim(),
+            score: Math.round(correctCount / quiz.questions.length * 100),
+            correctCount,
+            questionCount: quiz.questions.length,
+            answers: answers.map(answer => String.fromCharCode(65 + answer))
+        };
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Mengirim…';
+        try {
+            // text/plain keeps this a simple CORS request that Google Apps Script accepts without a preflight.
+            const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+            const reply = await response.json();
+            if (reply.status === 'ok') {
+                form.remove();
+                showQuizStatus('success', `Berhasil dikirim. Terima kasih, ${payload.nama}; jawaban kuis Anda sudah tercatat.`);
+                return;
+            }
+            showQuizStatus('error', reply.status === 'duplicate'
+                ? 'NIM ini sudah pernah mengirim kuis ini. Setiap NIM hanya dapat mengirim satu kali.'
+                : 'Jawaban belum terkirim. Periksa isian Anda lalu coba lagi.');
+        } catch {
+            showQuizStatus('error', 'Jawaban belum terkirim karena gangguan koneksi. Coba kirim lagi.');
+        }
+        submitButton.disabled = false;
+        submitButton.textContent = 'Kirim jawaban';
     }
 
     function toggleSidebar() {

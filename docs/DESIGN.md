@@ -12,7 +12,7 @@ Rujukan implementasi saat ini:
 
 - `assets/css/main.css`: token, kelas bersama, breakpoint, dan aturan cetak.
 - `assets/js/components/renderer.js`: struktur katalog, pembaca pertemuan, kuis, dan ujian.
-- `assets/js/app.js`: navigasi, drawer, dan perhitungan skor.
+- `assets/js/app.js`: navigasi, drawer, perhitungan skor, dan pengiriman kuis ke Google Apps Script.
 - `index.html`: kerangka portal, pemuatan font, aset, dan kontrol bacaan.
 
 ## Identitas visual yang harus dipertahankan
@@ -76,7 +76,7 @@ Gunakan nama berikut persis seperti implementasi. Kelas memberi gaya, tetapi tid
 | Metadata lama | `.font-mono-meta` saat ini memakai sans-serif; namanya bukan alasan memperkenalkan font monospace baru |
 | Akhir materi | `.lesson-footer`, `.practice-callout`, `.lesson-pagination`, `.pagination-link` |
 | Kuis | `.quiz-layout`, `.quiz-paper`, `.question` pada `fieldset`, `.question-number`, `.question-options`, `.answer-option` pada `label`, `.quiz-actions` |
-| Hasil kuis | `.quiz-result`, `.score-summary`, `.answer-feedback` dengan `.is-correct` atau `.is-incorrect` |
+| Identitas & status kuis | `fieldset.quiz-identity` dengan `.identity-grid`; status kirim `.quiz-result.quiz-status` dengan `.is-success` atau `.is-error` |
 | Ujian | `.exam-switch`, `.exam-paper`, `.exam-meta`, `.exam-status` |
 | Data belum tersedia | `.empty-state`, `.empty-icon`, `.sidebar-empty`; jangan menggantinya dengan isi rekaan |
 
@@ -102,7 +102,7 @@ Kesetiaan sumber bukan penyalinan piksel PDF, dan konsistensi UI bukan alasan me
 
 - Semua tautan, tombol, pengaturan bacaan, TOC, drawer, dan pilihan jawaban harus dapat digunakan dengan keyboard. Pertahankan skip link, fokus yang terlihat, urutan fokus logis, penanganan Escape, serta pengelolaan fokus drawer.
 - Berikan nama aksesibel pada kontrol ikon. Pertahankan hubungan `label`–input, `fieldset`–`legend`, `aria-controls`, `aria-expanded`, `aria-pressed`, dan `aria-current` sesuai fungsi yang sudah ada; jangan menambahkan peran ARIA yang tidak disertai perilakunya.
-- Pertahankan hasil kuis sebagai wilayah bernama dengan `aria-live="polite"`. Status benar/salah harus disampaikan lewat teks, bukan warna saja.
+- Pertahankan status pengiriman kuis sebagai `role="status"` dengan `aria-live="polite"`. Berhasil/gagal disampaikan lewat teks, bukan warna saja.
 - Pastikan kontras teks biasa minimal 4.5:1, teks besar 3:1, dan indikator kontrol/fokus yang relevan 3:1 terhadap warna sekitarnya. Periksa kembali saat menambah pasangan warna, terutama pada gambar atau latar berwarna.
 - Uji pembesaran teks/zoom browser setidaknya 200%. Jangan memotong teks, menyembunyikan fungsi penting, atau menonaktifkan zoom untuk mempertahankan tata letak.
 - Hormati `prefers-reduced-motion: reduce`; jangan menambah animasi, transisi, atau gulir halus yang mengabaikan preferensi itu.
@@ -110,13 +110,13 @@ Kesetiaan sumber bukan penyalinan piksel PDF, dan konsistensi UI bukan alasan me
 
 ## Batas teknis dan pelestarian fungsi
 
-- Proyek tetap situs statis HTML/CSS/JavaScript untuk **GitHub Pages**. Tidak perlu Tailwind, framework baru, bundler, langkah build, backend, atau server aplikasi untuk menjalankan hasilnya.
+- Proyek tetap situs statis HTML/CSS/JavaScript untuk **GitHub Pages**. Tidak perlu Tailwind, framework baru, bundler, langkah build, atau server aplikasi. Satu-satunya layanan eksternal untuk data adalah Web App Google Apps Script penerima hasil kuis (lihat `docs/QUIZ-GOOGLE-SHEETS.md`).
 - Gunakan aset dan jalur relatif yang sesuai lokasi dokumen. Hindari jalur berawalan `/` yang mengasumsikan situs berada di akar domain; uji tautan pada deployment di subdirektori repositori.
 - Gunakan komponen, token, dan pola yang sudah ada. Jangan mengganti sistem renderer atau model data hanya untuk menambah materi.
 - Perubahan visual tidak boleh merusak katalog, pembukaan mata kuliah, pemilihan pertemuan, tab materi/kuis/ujian, URL/riwayat navigasi, TOC, tombol sebelumnya/berikutnya, atau cetak.
 - Pertahankan ID dan pengait peristiwa yang dipakai aplikasi, termasuk `portal-main-view`, `portal-sidebar`, `portal-quiz-form`, dan `portal-quiz-result`, kecuali perubahan fungsi itu memang diminta dan seluruh pemanggil ikut diselaraskan.
-- Alur kuis tetap: pilih satu jawaban per soal → validasi isian wajib → periksa jawaban → tampilkan skor dan pembahasan tiap soal. Skor saat ini dihitung dengan `Math.round(jumlahBenar / jumlahSoal * 100)`. Jangan mengubah kunci jawaban, rumus, atau isi penjelasan dalam tugas desain.
-- Hasil latihan bukan nilai resmi dan tidak dikirim sebagai nilai resmi; pertahankan penjelasan ini. Jangan mengklaim progres atau skor disimpan permanen jika fungsi itu tidak tersedia.
+- Alur kuis: satu kuis per mata kuliah → isi nama, NIM, kelas (mata kuliah otomatis, hanya-baca) → jawab **semua** soal (validasi wajib) → kirim. Skor dihitung di browser dengan `Math.round(jumlahBenar / jumlahSoal * 100)` dan dikirim bersama jawaban tiap soal ke Google Spreadsheet. Halaman hanya menampilkan status “Berhasil dikirim”, NIM duplikat, atau gagal; **jangan menampilkan skor, benar/salah, pembahasan, atau kunci**. Jangan mengubah kunci atau rumus dalam tugas desain.
+- Kunci dan skor berada di browser sehingga dapat dilihat atau dimanipulasi oleh pengguna yang paham teknis; jangan mengklaim kuis aman sebagai ujian resmi.
 
 ## Daftar periksa sebelum menyatakan selesai
 
@@ -128,7 +128,7 @@ Untuk perubahan UI, CSS, renderer, atau materi yang memengaruhi tata letak, laku
 - **Keyboard:** uji Tab/Shift+Tab, Enter/Space pada kontrol yang sesuai, Escape pada drawer, skip link, fokus terlihat, pemilihan radio, dan pengiriman kuis tanpa mouse.
 - **Bacaan:** uji zoom browser 200%, kontras, dan reduced motion. Periksa pratinjau cetak, termasuk tabel dan gambar.
 - **Isi:** bandingkan hasil dengan PDF untuk label, data, kutipan, diagram, legenda, dan makna warna; periksa tautan serta target TOC.
-- **Skor dan fungsi:** uji isian kuis yang belum lengkap, semua benar (100), semua salah (0), dan jawaban campuran dengan skor pembulatan yang sesuai. Pastikan jumlah benar, label benar/belum tepat, jawaban benar, serta pembahasan cocok; uji navigasi kembali ke materi dan perpindahan kuis.
+- **Kuis:** uji identitas kosong, NIM non-angka, soal belum lengkap (ditolak), endpoint kosong (pesan belum aktif), kiriman berhasil, NIM duplikat, dan gangguan koneksi. Pastikan payload berisi skor yang benar (semua benar 100, semua salah 0, campuran sesuai pembulatan) dan tidak ada skor/kunci yang tampil di halaman.
 - **Regresi portal:** buka katalog, materi, kuis, panduan UTS/UAS, dan status belum tersedia; periksa navigasi sebelumnya/berikutnya, tombol kembali/maju browser, serta tautan/aset relatif.
 
 Jangan menyatakan pengujian visual, keyboard, atau skor lulus bila belum dilakukan. Jika alat pengujian tidak tersedia, tuliskan keterbatasan dan pemeriksaan yang masih perlu dilakukan. Perubahan dokumentasi saja cukup diperiksa isi, rujukan, dan lingkup berkasnya; tidak perlu mengklaim pengujian aplikasi.

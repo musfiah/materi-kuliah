@@ -28,7 +28,7 @@ window.PortalData.courses['manajemen-media-penyiaran'].exams = {
             <p class="editorial-lead" id="uas-pengantar">Berikut soal kuis pilihan ganda Manajemen Media Penyiaran sesuai berkas sumber, sebagai bahan latihan menjelang UAS. Halaman ini bukan soal atau ketentuan UAS resmi; jadwal, durasi, dan cara pengumpulan UAS tidak tercantum dalam sumber.</p>
             <div class="academic-box">
                 <span class="academic-box-header">Latihan interaktif</span>
-                <p>Soal yang sama dapat dikerjakan dan diperiksa langsung di tab Kuis, pilihan <strong>Kuis pilihan ganda</strong>, lengkap dengan skor dan pembahasan.</p>
+                <p>Kerjakan soal yang sama di tab Kuis (<strong>Kuis pilihan ganda</strong>). Isi identitas, jawab semua soal, lalu kirim; jawaban dicatat untuk dosen dan hasilnya tidak ditampilkan.</p>
                 <p><button type="button" class="button button-primary" onclick="PortalApp.switchTab('kuis', 99)">Kerjakan kuis</button></p>
             </div>
 
@@ -56,25 +56,6 @@ window.PortalData.courses['manajemen-media-penyiaran'].exams = {
                     <ol type="A"><li>Metro TV / Kompas TV</li><li>RDK FM</li><li>TVRI</li><li>Netflix</li></ol></li>
             </ol>
 
-            <h2 id="uas-kunci">Kunci jawaban</h2>
-            <div class="table-wrapper" tabindex="0" role="region" aria-label="Kunci jawaban kuis pilihan ganda">
-                <table class="academic-table">
-                    <caption>Kunci jawaban dan pembahasan dari sumber</caption>
-                    <thead><tr><th scope="col">Nomor</th><th scope="col">Jawaban</th><th scope="col">Pembahasan</th></tr></thead>
-                    <tbody>
-                            <tr><th scope="row">1</th><td>B. Komodifikasi</td><td>Perubahan nilai guna menjadi nilai tukar disebut komodifikasi dalam perspektif ekonomi politik dan nilai ekonomi informasi.</td></tr>
-                            <tr><th scope="row">2</th><td>B. Keuntungan yang diperoleh melalui iklan, langganan, dan data audiens</td><td>Nilai tukar berkaitan dengan keuntungan ekonomi/finansial media, sedangkan manfaat bagi masyarakat merupakan nilai guna.</td></tr>
-                            <tr><th scope="row">3</th><td>A. Newsroom</td><td>Newsroom merupakan ruang redaksi terintegrasi sebagai salah satu dimensi konvergensi media.</td></tr>
-                            <tr><th scope="row">4</th><td>B. Komisi Penyiaran Indonesia (KPI)</td><td>KPI merupakan regulator independen publik yang menyusun P3SPS dan mengawasi isi siaran.</td></tr>
-                            <tr><th scope="row">5</th><td>B. 15% LPP – 20% LPS</td><td>Batas maksimal waktu siaran iklan niaga menurut UU No. 32 Tahun 2002 adalah 15% untuk LPP dan 20% untuk LPS.</td></tr>
-                            <tr><th scope="row">6</th><td>C. Berlangganan</td><td>SVOD (Subscription Video on Demand) adalah model bisnis layanan streaming/OTT berbasis berlangganan.</td></tr>
-                            <tr><th scope="row">7</th><td>C. Sistem subsidi silang</td><td>Pendapatan dari program komersial dimanfaatkan untuk mendukung program edukatif, informatif, atau sosial.</td></tr>
-                            <tr><th scope="row">8</th><td>A. Dayparting</td><td>Dayparting adalah pembagian waktu siaran berdasarkan kebiasaan dan kebutuhan pendengar di tiap rentang waktu.</td></tr>
-                            <tr><th scope="row">9</th><td>C. Actuating</td><td>Actuating berfokus pada pengarahan dan koordinasi tim agar rencana yang telah disusun dapat dieksekusi.</td></tr>
-                            <tr><th scope="row">10</th><td>A. Metro TV / Kompas TV</td><td>Contoh penerapan hybrid business model melalui kanal digital, portal berita, dan event dicontohkan pada Metro TV / Kompas TV.</td></tr>
-                    </tbody>
-                </table>
-            </div>
             <p class="source-note">Sumber: “Soal Quiz Pilihan Ganda MMP”, halaman 1–4.</p>
         `
     }

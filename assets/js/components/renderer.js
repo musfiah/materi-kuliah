@@ -92,7 +92,7 @@ window.PortalRenderer = (function () {
                     <div class="guide-item">
                         <span class="badge" aria-hidden="true">2</span>
                         <h3>Uji pemahaman</h3>
-                        <p>Kerjakan kuis yang tersedia, periksa jawaban, lalu pelajari pembahasannya.</p>
+                        <p>Isi identitas, kerjakan semua soal kuis, lalu kirim jawaban Anda untuk dicatat dosen.</p>
                     </div>
                     <div class="guide-item">
                         <span class="badge" aria-hidden="true">3</span>
@@ -151,11 +151,11 @@ window.PortalRenderer = (function () {
                     <footer class="lesson-footer">
                         <section class="practice-callout" aria-labelledby="practice-heading">
                             <div>
-                                <p class="eyebrow">Latihan mandiri</p>
-                                <h2 id="practice-heading">Tinjau kembali pemahaman Anda</h2>
-                                <p>Buka bagian kuis untuk melihat latihan yang tersedia bagi pertemuan ini.</p>
+                                <p class="eyebrow">Kuis mata kuliah</p>
+                                <h2 id="practice-heading">Uji pemahaman Anda</h2>
+                                <p>Kerjakan kuis mata kuliah ini, lalu kirim jawaban Anda untuk dicatat dosen.</p>
                             </div>
-                            <button type="button" class="button button-primary" onclick="PortalApp.switchTab('kuis', ${argument(meeting.number)})">Lihat kuis</button>
+                            <button type="button" class="button button-primary" onclick="PortalApp.switchTab('kuis', ${argument(meeting.number)})">Kerjakan kuis</button>
                         </section>
                         <nav class="lesson-pagination" aria-label="Navigasi pertemuan">
                             ${prevMeeting ? `
@@ -181,7 +181,30 @@ window.PortalRenderer = (function () {
         `;
     }
 
-    function renderQuizView(courseMeta, meetings, quizzesObj, activeQuizNum) {
+    function renderIdentityFields(courseMeta, quizConfig) {
+        const classes = (quizConfig && Array.isArray(quizConfig.classes)) ? quizConfig.classes : [];
+        // Until the owner fills quizConfig.classes, accept typed class names instead of blocking submissions.
+        const classField = classes.length ? `
+            <select id="quiz-class" name="kelas" required>
+                <option value="">Pilih kelas</option>
+                ${classes.map((item) => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`).join('')}
+            </select>
+        ` : '<input id="quiz-class" name="kelas" type="text" autocomplete="off" required>';
+
+        return `
+            <fieldset class="quiz-identity">
+                <legend>Identitas mahasiswa</legend>
+                <div class="identity-grid">
+                    <label for="quiz-name">Nama lengkap<input id="quiz-name" name="nama" type="text" autocomplete="name" required></label>
+                    <label for="quiz-nim">NIM<input id="quiz-nim" name="nim" type="text" inputmode="numeric" pattern="[0-9]+" title="NIM hanya berisi angka" autocomplete="off" required></label>
+                    <label for="quiz-class">Kelas${classField}</label>
+                    <label for="quiz-course">Mata kuliah<input id="quiz-course" name="mataKuliah" type="text" value="${escapeHtml(courseMeta.title)}" readonly></label>
+                </div>
+            </fieldset>
+        `;
+    }
+
+    function renderQuizView(courseMeta, meetings, quizzesObj, activeQuizNum, quizConfig) {
         const quizKeys = Object.keys(quizzesObj || {}).map(Number).sort((a, b) => a - b);
         if (!quizKeys.length) {
             return emptyState('Kuis belum tersedia', `Belum ada kuis yang dapat dikerjakan untuk mata kuliah ${courseMeta.title}.`);
@@ -211,23 +234,24 @@ window.PortalRenderer = (function () {
 
         return `
             <div class="quiz-layout">
-                <nav class="module-strip" aria-label="Pilih kuis">${selectorButtons}</nav>
+                ${quizKeys.length > 1 ? `<nav class="module-strip" aria-label="Pilih kuis">${selectorButtons}</nav>` : ''}
                 <section class="quiz-paper" aria-labelledby="quiz-heading">
                     <header class="lesson-header">
                         <p class="lesson-meta">${escapeHtml(courseMeta.title)} · ${questions.length} soal</p>
                         <h1 id="quiz-heading" class="lesson-title">${escapeHtml(currentQuiz.title)}</h1>
-                        <p class="lesson-subtitle">Pilih satu jawaban untuk setiap soal, lalu periksa hasil dan pembahasannya.</p>
+                        <p class="lesson-subtitle">Isi identitas Anda, jawab semua soal, lalu kirim. Setiap NIM hanya dapat mengirim kuis ini satu kali; hasil dicatat untuk dosen dan tidak ditampilkan di halaman ini.</p>
                     </header>
                     ${questions.length ? `
                         <form id="portal-quiz-form" onsubmit="PortalApp.submitQuiz(event, ${argument(selectedNum)});">
+                            ${renderIdentityFields(courseMeta, quizConfig)}
                             ${questionsHtml}
                             <div class="quiz-actions">
                                 ${relatedMeeting ? `<button type="button" class="button button-text" onclick="PortalApp.switchTab('materi', ${argument(relatedMeeting.number)})">← Baca ulang materi pertemuan ${escapeHtml(relatedMeeting.number)}</button>` : ''}
-                                <button type="submit" class="button button-primary">Periksa jawaban</button>
+                                <button type="submit" class="button button-primary">Kirim jawaban</button>
                             </div>
                         </form>
                     ` : '<p class="empty-state">Belum ada soal yang dapat dikerjakan pada kuis ini.</p>'}
-                    <div id="portal-quiz-result" class="quiz-result" role="region" aria-label="Hasil kuis" aria-live="polite" hidden></div>
+                    <div id="portal-quiz-result" class="quiz-result" role="status" aria-live="polite" hidden></div>
                 </section>
             </div>
         `;

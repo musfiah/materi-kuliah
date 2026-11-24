@@ -122,7 +122,7 @@ Sanitasi SVG/HTML yang diambil dari sumber; jangan memasukkan script, handler, a
 - Tidak semua soal PDF harus diubah menjadi pilihan ganda. Esai tetap esai. Mesin kuis saat ini menilai pilihan ganda; jenis latihan lain memerlukan implementasi terpisah yang disepakati, bukan konversi diam-diam.
 - Jangan membuat kunci/pembahasan lalu melabelinya sebagai kunci dosen. Jika sumber tidak memuat kunci, nyatakan itu dan gunakan penyajian soal tanpa penilaian atau minta arahan.
 - Untuk mata kuliah baru, tambahkan metadata yang terverifikasi pada `courses-registry.js`, tiga berkas data, dan pemuatan script di `index.html`; jangan menyalin aplikasi baru ke folder mata kuliah.
-- Kuis di situs statis adalah latihan mandiri. Tidak ada pengumpulan nilai otomatis atau kerahasiaan kunci.
+- Setiap mata kuliah memakai **satu** kuis (kunci objek `99` dengan `label`). Jawaban dikirim ke Google Spreadsheet dosen tanpa menampilkan skor/kunci ke mahasiswa (lihat `docs/QUIZ-GOOGLE-SHEETS.md`). Kunci tetap berada di JavaScript publik, jadi tidak rahasia; jangan menampilkan tabel kunci di tab UAS.
 
 ### G. Cocokkan ulang dan validasi
 

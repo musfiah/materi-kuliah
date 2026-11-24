@@ -15,7 +15,7 @@ Berlaku untuk seluruh repositori. Baca dokumen ini sebelum mengubah kode, desain
 - **Desain terinspirasi Coursera sudah disetujui:** biru-putih, font Lato, kartu kursus, sidebar modul, area baca lapang. Bukan salinan merek Coursera.
 - Jangan kembali ke desain lama krem/terracotta, judul serif editorial, metadata monospace, atau menambahkan gradien pelangi, dekorasi berlebihan, dan kartu bertumpuk tanpa kebutuhan.
 - Jangan mengganti font, warna utama, kerangka navigasi, atau framework hanya karena sedang menambah materi.
-- Pertahankan daftar isi, navigasi pertemuan, kuis beserta pembahasan, dan cetak PDF. Pengatur ukuran teks dan pilihan font di header **sengaja dihapus atas permintaan pemilik (2026-11-23)**; jangan menambahkannya kembali tanpa permintaan. Pembaca memakai zoom browser.
+- Pertahankan daftar isi, navigasi pertemuan, kuis (satu kuis per mata kuliah, kirim ke Google Spreadsheet), dan cetak PDF. Pengatur ukuran teks dan pilihan font di header **sengaja dihapus atas permintaan pemilik (2026-11-23)**; jangan menambahkannya kembali tanpa permintaan. Pembaca memakai zoom browser.
 - Jangan menampilkan rating, jumlah peserta, progres, SKS, dosen, jadwal, atau status ketersediaan yang dibuat-buat. Fakta metadata harus bersumber atau dikonfirmasi.
 
 ## Arsitektur dan publikasi
@@ -24,13 +24,14 @@ Berlaku untuk seluruh repositori. Baca dokumen ini sebelum mengubah kode, desain
 - `index.html`: kerangka portal dan pemuatan script.
 - `assets/css/main.css`: sumber utama token dan komponen desain.
 - `assets/js/components/renderer.js`: template tampilan bersama.
-- `assets/js/app.js`: navigasi/state, sidebar, dan penilaian kuis.
+- `assets/js/app.js`: navigasi/state, sidebar, penilaian dan pengiriman kuis.
+- `data/quiz-config.js`: URL Web App Google Apps Script (`endpoint`) dan daftar kelas (`classes`); diisi pemilik.
 - `data/courses-registry.js`: metadata dan daftar mata kuliah.
 - `data/courses/<slug>/meetings.js`, `quizzes.js`, `exams.js`: data akademik per mata kuliah.
 - Gunakan pola JavaScript yang sudah ada (`window.PortalData`, `window.PortalRenderer`, `window.PortalApp`). Hindari duplikasi engine atau monolit HTML baru per mata kuliah.
 - Semua path publik harus aman untuk project site `/nama-repo/`: gunakan path relatif, bukan `/assets/...` atau path komputer lokal. Routing hash/query yang ada dan link folder lama harus tetap berfungsi.
 - Jangan memasukkan Tailwind CDN, dependency baru, layanan pihak ketiga, atau framework baru tanpa kebutuhan yang jelas. Google Fonts sudah digunakan dengan fallback lokal; konten tidak boleh bergantung pada berhasilnya unduhan font.
-- Tidak ada backend penyimpanan nilai. Kuis di browser adalah latihan mandiri; jawaban dan kunci dalam situs statis bersifat publik. Jangan menjanjikan keamanan ujian resmi atau pengumpulan nilai otomatis.
+- Hasil kuis dikirim ke Google Spreadsheet milik dosen melalui Google Apps Script (`docs/google-apps-script/Code.gs`, panduan `docs/QUIZ-GOOGLE-SHEETS.md`), atas permintaan pemilik (2026-11-24). Ini satu-satunya layanan pihak ketiga untuk data; jangan menambah layanan lain. Mahasiswa mengisi nama, NIM, kelas (mata kuliah otomatis) dan semua soal; halaman **tidak menampilkan skor, benar/salah, maupun pembahasan**, hanya status terkirim. Satu NIM satu kiriman per kuis (dicek skrip). Kunci dan skor tetap berada/dihitung di browser sehingga dapat dilihat atau dimanipulasi; jangan menjanjikan keamanan ujian resmi. Jangan menampilkan kunci jawaban di halaman mana pun.
 
 ## Konversi materi: lengkap, bukan sekadar ringkasan
 

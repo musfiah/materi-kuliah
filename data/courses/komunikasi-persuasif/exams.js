@@ -28,7 +28,7 @@ window.PortalData.courses['komunikasi-persuasif'].exams = {
             <p class="editorial-lead" id="uas-pengantar">Berikut soal kuis review menjelang Ujian Akhir Semester sesuai berkas sumber. Halaman ini adalah bahan latihan, bukan soal atau ketentuan UAS resmi. Jadwal, durasi, dan cara pengumpulan UAS tidak tercantum dalam sumber.</p>
             <div class="academic-box">
                 <span class="academic-box-header">Latihan interaktif</span>
-                <p>Soal yang sama dapat dikerjakan dan diperiksa langsung di tab Kuis, pilihan <strong>Kuis review menjelang UAS</strong>, lengkap dengan skor dan pembahasan.</p>
+                <p>Kerjakan soal yang sama di tab Kuis (<strong>Kuis review menjelang UAS</strong>). Isi identitas, jawab semua soal, lalu kirim; jawaban dicatat untuk dosen dan hasilnya tidak ditampilkan.</p>
                 <p><button type="button" class="button button-primary" onclick="PortalApp.switchTab('kuis', 99)">Kerjakan kuis review</button></p>
             </div>
 
@@ -57,25 +57,6 @@ window.PortalData.courses['komunikasi-persuasif'].exams = {
                     <ol type="A"><li>Kognitif</li><li>Afektif</li><li>Konatif</li><li>Persepsi</li></ol></li>
             </ol>
 
-            <h2 id="uas-kunci">Kunci jawaban</h2>
-                <div class="table-wrapper" tabindex="0" role="region" aria-label="Kunci jawaban kuis review">
-                    <table class="academic-table">
-                        <caption>Kunci jawaban kuis review menjelang UAS</caption>
-                        <thead><tr><th scope="col">Nomor</th><th scope="col">Jawaban</th><th scope="col">Asal kunci</th></tr></thead>
-                        <tbody>
-                            <tr><th scope="row">1</th><td>B</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">2</th><td>B</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">3</th><td>C</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">4</th><td>A</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">5</th><td>C</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">6</th><td>B</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">7</th><td>A</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">8</th><td>C</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">9</th><td>A</td><td>Tercantum di sumber</td></tr>
-                            <tr><th scope="row">10</th><td>C</td><td>Dikonfirmasi pemilik portal; sumber berhenti pada tulisan “Nomor 10” tanpa huruf jawaban</td></tr>
-                        </tbody>
-                    </table>
-                </div>
             <p class="source-note">Sumber: “soal quiz review menjelang uas”, halaman 1–3.</p>
         `
     }

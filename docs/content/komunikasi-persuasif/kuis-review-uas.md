@@ -29,3 +29,7 @@
 ## 5. Validasi
 
 Lihat [README.md#validasi](README.md#validasi): skenario semua benar (100), semua salah (0), campuran 7/10 (70), dan isian belum lengkap (form tidak valid) sudah diuji di Chrome headless.
+
+## Pembaruan 2026-11-24
+
+Atas permintaan pemilik, kuis tidak lagi menampilkan skor, benar/salah, atau pembahasan kepada mahasiswa. Mahasiswa mengisi nama, NIM, kelas, dan semua soal; skor dan jawaban dikirim ke Google Spreadsheet dosen (lihat [docs/QUIZ-GOOGLE-SHEETS.md](../../QUIZ-GOOGLE-SHEETS.md)). Tabel kunci jawaban di tab UAS dihapus; kunci dan pembahasan tetap tersimpan di `quizzes.js` untuk perhitungan skor dan tidak ditampilkan.

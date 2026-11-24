@@ -216,18 +216,16 @@ button, a, h1, h2, h3, p, strong, code { overflow-wrap: anywhere; }
 .answer-option input { accent-color: var(--accent-primary); flex-shrink: 0; width: 17px; height: 17px; }
 .answer-option strong { margin-right: 5px; }
 .quiz-actions { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 28px; }
-.quiz-result { margin-top: 32px; border-top: 1px solid var(--border-default); padding-top: 28px; scroll-margin-top: 100px; }
-.score-summary { background: var(--accent-soft); padding: 24px; border-radius: 6px; margin-bottom: 24px; }
-.score-summary h2 { color: var(--accent-primary); font-size: 44px; margin-bottom: 12px; }
-.score-summary h2 span { font-size: 20px; font-weight: 400; }
-.score-summary p { font-size: 15px; margin-bottom: 10px; }
-.answer-feedback { padding: 20px; border: 1px solid; border-radius: 5px; margin-bottom: 16px; font-size: 15px; }
-.answer-feedback h3 { font-size: 16px; }
-.answer-feedback p:last-child { margin-bottom: 0; }
-.is-correct { background: #f1faf5; border-color: #b3d9c4; }
-.is-correct h3 { color: #14633b; }
-.is-incorrect { background: #fff6f4; border-color: #e8c1b7; }
-.is-incorrect h3 { color: #a52d20; }
+.quiz-identity { border: 1px solid var(--border-default); border-radius: 6px; padding: 20px 22px; margin: 0 0 12px; min-width: 0; background: #f8faff; }
+.quiz-identity legend { font-weight: 700; padding: 0 6px; }
+.identity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; }
+.identity-grid label { display: grid; gap: 6px; font-size: 14px; font-weight: 700; color: var(--ink-secondary); }
+.identity-grid input, .identity-grid select { font: 400 15px/1.4 var(--font-sans); padding: 10px 12px; border: 1px solid var(--border-default); border-radius: 4px; background: white; color: var(--ink-primary); min-width: 0; }
+.identity-grid input[readonly] { background: var(--bg-subtle); color: var(--ink-muted); }
+.quiz-result { margin-top: 28px; scroll-margin-top: 100px; }
+.quiz-status { padding: 18px 20px; border-radius: 6px; border: 1px solid; font-size: 16px; }
+.quiz-status.is-success { background: #eef8f1; border-color: #8cc59d; color: #1d5a2e; }
+.quiz-status.is-error { background: #fdf1f0; border-color: #e5a39b; color: #8a2419; }
 .exam-switch { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
 .exam-switch .module-chip { max-width: none; font-size: 14px; }
 .exam-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; background: #f5f8fc; border-radius: 5px; font-size: 14px; margin: 24px 0; }

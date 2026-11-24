@@ -40,15 +40,16 @@ materi-kuliah/
 │   ├── css/
 │   │   └── main.css                 # Tema platform belajar, layout responsif, dan gaya bacaan
 │   └── js/
-│       ├── app.js                   # State controller, URL routing, sidebar, & penilaian kuis
+│       ├── app.js                   # State controller, URL routing, sidebar, penilaian & pengiriman kuis
 │       └── components/
 │           └── renderer.js          # Komponen perender UI (Katalog, Ruang Baca, Kuis, UTS/UAS)
 ├── data/
 │   ├── courses-registry.js          # Katalog & metadata seluruh mata kuliah
+│   ├── quiz-config.js               # URL Google Apps Script & daftar kelas untuk kuis
 │   └── courses/
 │       ├── perkembangan-teknologi-komunikasi/
 │       │   ├── meetings.js          # Materi bacaan per pertemuan (Pertemuan 1 - 5)
-│       │   ├── quizzes.js           # Soal kuis evaluasi interaktif per pertemuan
+│       │   ├── quizzes.js           # Satu kuis gabungan (dikirim ke Google Spreadsheet)
 │       │   └── exams.js             # Panduan & soal UTS maupun UAS
 │       ├── komunikasi-persuasif/
 │       │   ├── meetings.js          # Modul materi per pertemuan Komunikasi Persuasif
@@ -100,23 +101,26 @@ Buka berkas `data/courses/<nama-matkul>/meetings.js`, lalu tambahkan objek perte
 }
 ```
 
-### 2. Menambah Kuis Evaluasi Per Pertemuan
-Buka berkas `data/courses/<nama-matkul>/quizzes.js`, lalu tambahkan nomor pertemuan sebagai kunci objek:
+### 2. Mengisi Kuis Mata Kuliah
+Setiap mata kuliah memiliki **satu** kuis. Buka `data/courses/<nama-matkul>/quizzes.js` dan tambahkan soal ke kunci `99` (bukan nomor pertemuan):
 
 ```javascript
-1: {
-    meetingNumber: 1,
-    title: 'Evaluasi Pertemuan 1',
+99: {
+    meetingNumber: null,
+    label: 'Kuis pilihan ganda',
+    title: 'Kuis Nama Mata Kuliah',
     questions: [
         {
             q: 'Pertanyaan kuis?',
             options: ['Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D'],
             correct: 0, // Indeks jawaban benar (0 = A, 1 = B, dst.)
-            exp: 'Penjelasan akademik mengapa jawaban tersebut benar.'
+            exp: 'Pembahasan (disimpan di data; tidak ditampilkan ke mahasiswa).'
         }
     ]
 }
 ```
+
+Mahasiswa mengisi nama, NIM, kelas, dan semua soal; skor dan jawaban dikirim ke Google Spreadsheet dosen tanpa ditampilkan di halaman. Pemasangan spreadsheet, `endpoint`, dan daftar kelas dijelaskan di [docs/QUIZ-GOOGLE-SHEETS.md](docs/QUIZ-GOOGLE-SHEETS.md).
 
 ### 3. Mengisi Soal / Panduan UTS & UAS
 Buka berkas `data/courses/<nama-matkul>/exams.js`, ubah `available: true` pada objek `uts` atau `uas`, lalu isi properti `deadline`, `submissionChannel`, dan `content`.
