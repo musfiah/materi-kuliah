@@ -60,3 +60,12 @@ Dijalankan 2026-11-23 di server lokal `python3 -m http.server` dan Chrome headle
 | Keyboard (CDP): Tab pertama ke skip link; drawer 390 px buka → fokus tombol tutup, Escape → tertutup dan fokus kembali ke tombol menu; panah bawah memilih radio kuis | Lulus |
 
 Belum dijalankan: pembaca layar, peninjauan visual manusia atas seluruh halaman web, serta uji di subpath `/nama-repo/` GitHub Pages yang sebenarnya (path diperiksa relatif secara statis).
+
+## Pembaruan tampilan 2026-11-26
+
+Atas permintaan pemilik, tampilan web dibuat seperti materi pembelajaran, bukan salinan presentasi:
+
+- Blok “Sumber pertemuan ini”, subjudul sumber, keterangan “Sumber: … halaman N”, catatan konversi, penanda “perlu verifikasi”, dan nama/label kelompok **tidak lagi tampil**. Semuanya tetap ada sebagai komentar HTML di `content` dan komentar `// Sumber:` per pertemuan di `meetings.js`.
+- Slide sampul, daftar anggota, agenda, penutup, dan tanya jawab disembunyikan (isi disimpan sebagai komentar). Pembatas topik tanpa isi juga disembunyikan; judul pertanyaan tanpa isi menjadi blok “Diskusi”.
+- Judul “(lanjutan)” dan judul ganda berurutan digabung ke bagian sebelumnya; judul huruf kapital semua dirapikan.
+- Pemetaan halaman di tabel audit tetap berlaku sebagai jejak sumber; ID bagian yang disembunyikan atau digabung tidak lagi muncul di daftar isi.

@@ -100,3 +100,14 @@ Dijalankan 2026-11-23 di `python3 -m http.server` lokal + Chrome headless (CDP):
 | Konsol | Hanya 404 `favicon.ico` (sudah ada sebelumnya) |
 
 Belum dijalankan: pembaca layar, tinjauan manusia seluruh halaman, uji di subpath GitHub Pages sebenarnya.
+
+## Pembaruan tampilan 2026-11-26
+
+Atas permintaan pemilik, tampilan web dibuat seperti materi pembelajaran, bukan salinan presentasi:
+
+- Blok “Sumber pertemuan ini”, subjudul sumber, keterangan “Sumber: … halaman N”, catatan konversi, penanda “perlu verifikasi”, dan nama/label kelompok **tidak lagi tampil**. Semuanya tetap ada sebagai komentar HTML di `content` dan komentar `// Sumber:` per pertemuan di `meetings.js`.
+- Slide sampul, daftar anggota, agenda, penutup, dan tanya jawab disembunyikan (isi disimpan sebagai komentar). Pembatas topik tanpa isi juga disembunyikan; judul pertanyaan tanpa isi menjadi blok “Diskusi”.
+- Judul “(lanjutan)” dan judul ganda berurutan digabung ke bagian sebelumnya; judul huruf kapital semua dirapikan.
+- Pemetaan halaman di tabel audit tetap berlaku sebagai jejak sumber; ID bagian yang disembunyikan atau digabung tidak lagi muncul di daftar isi.
+- Kesimpulan new media (mahasiswa hlm. 71) dipindah ke akhir Pertemuan 6 karena merupakan penutup topik new media.
+- Meme penutup (hlm. 19, bertuliskan “…presentasinya sudah…”) dan foto perpustakaan pada slide tanya jawab (hlm. 42) ikut tersembunyi bersama bagian penutup/tanya jawabnya; asetnya tetap ada di `assets/media/`.

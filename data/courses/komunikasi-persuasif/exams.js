@@ -25,7 +25,7 @@ window.PortalData.courses['komunikasi-persuasif'].exams = {
         deadline: '',
         submissionChannel: '',
         content: `
-            <p class="editorial-lead" id="uas-pengantar">Berikut soal kuis review menjelang Ujian Akhir Semester sesuai berkas sumber. Halaman ini adalah bahan latihan, bukan soal atau ketentuan UAS resmi. Jadwal, durasi, dan cara pengumpulan UAS tidak tercantum dalam sumber.</p>
+            <p class="editorial-lead" id="uas-pengantar">Berikut soal kuis review untuk persiapan Ujian Akhir Semester. Soal ini merupakan bahan latihan, bukan soal UAS resmi.</p>
             <div class="academic-box">
                 <span class="academic-box-header">Latihan interaktif</span>
                 <p>Kerjakan soal yang sama di tab Kuis (<strong>Kuis review menjelang UAS</strong>). Isi identitas, jawab semua soal, lalu kirim; jawaban dicatat untuk dosen dan hasilnya tidak ditampilkan.</p>
@@ -57,7 +57,7 @@ window.PortalData.courses['komunikasi-persuasif'].exams = {
                     <ol type="A"><li>Kognitif</li><li>Afektif</li><li>Konatif</li><li>Persepsi</li></ol></li>
             </ol>
 
-            <p class="source-note">Sumber: “soal quiz review menjelang uas”, halaman 1–3.</p>
+            <!-- Sumber: “soal quiz review menjelang uas”, halaman 1–3. -->
         `
     }
 };

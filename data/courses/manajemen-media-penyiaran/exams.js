@@ -25,7 +25,7 @@ window.PortalData.courses['manajemen-media-penyiaran'].exams = {
         deadline: '',
         submissionChannel: '',
         content: `
-            <p class="editorial-lead" id="uas-pengantar">Berikut soal kuis pilihan ganda Manajemen Media Penyiaran sesuai berkas sumber, sebagai bahan latihan menjelang UAS. Halaman ini bukan soal atau ketentuan UAS resmi; jadwal, durasi, dan cara pengumpulan UAS tidak tercantum dalam sumber.</p>
+            <p class="editorial-lead" id="uas-pengantar">Berikut soal kuis pilihan ganda Manajemen Media Penyiaran sebagai bahan latihan menjelang Ujian Akhir Semester. Soal ini bukan soal UAS resmi.</p>
             <div class="academic-box">
                 <span class="academic-box-header">Latihan interaktif</span>
                 <p>Kerjakan soal yang sama di tab Kuis (<strong>Kuis pilihan ganda</strong>). Isi identitas, jawab semua soal, lalu kirim; jawaban dicatat untuk dosen dan hasilnya tidak ditampilkan.</p>
@@ -56,7 +56,7 @@ window.PortalData.courses['manajemen-media-penyiaran'].exams = {
                     <ol type="A"><li>Metro TV / Kompas TV</li><li>RDK FM</li><li>TVRI</li><li>Netflix</li></ol></li>
             </ol>
 
-            <p class="source-note">Sumber: “Soal Quiz Pilihan Ganda MMP”, halaman 1–4.</p>
+            <!-- Sumber: “Soal Quiz Pilihan Ganda MMP”, halaman 1–4. -->
         `
     }
 };

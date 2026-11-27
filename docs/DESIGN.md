@@ -71,7 +71,7 @@ Gunakan nama berikut persis seperti implementasi. Kelas memberi gaya, tetapi tid
 | Studi kasus | `.case-study-block` dengan `.case-study-label` |
 | Tabel | `.table-wrapper` membungkus elemen `table.academic-table`; gunakan header tabel yang tepat |
 | Daftar konsep | `.concept-list`, `.concept-item`, `.concept-index` |
-| Gambar materi | `figure.lesson-figure` dengan `img[alt][width][height]` dan `figcaption`; `.figure-grid`, `.figure-description`, `.source-note` |
+| Gambar materi | `figure.lesson-figure` dengan `img[alt][width][height]` dan `figcaption` (tanpa keterangan sumber/halaman); `.figure-grid`, `.figure-description`. `.source-note` masih ada di CSS tetapi tidak dipakai untuk catatan sumber/konversi di tampilan |
 | Tahapan/proses sederhana | `.step-grid`, `.step-card`, `.step-card-num`; bukan mesin diagram universal |
 | Metadata lama | `.font-mono-meta` saat ini memakai sans-serif; namanya bukan alasan memperkenalkan font monospace baru |
 | Akhir materi | `.lesson-footer`, `.practice-callout`, `.lesson-pagination`, `.pagination-link` |
@@ -91,7 +91,7 @@ Bedakan **isi akademik sumber** dari **kerangka antarmuka global**:
 1. Header, navigasi, tombol, panel bacaan, dan tipografi dasar mengikuti desain portal yang konsisten, bukan tema tiap PDF.
 2. Pertahankan makna, urutan logis, istilah, kutipan, sumber, data, rumus, hubungan antarkonsep, serta gambar/diagram asli yang membawa informasi. Jangan menghapus diagram karena sulit diekstrak atau menggantinya dengan hiasan generik.
 3. Pertahankan pengodean warna semantik pada diagram, kategori, legenda, dan grafik. Jangan memaksa semua isi menjadi biru portal. **Jangan mewarnai ulang foto atau grafik**, memakai filter warna merek, maupun mengubah warna yang membedakan kelompok data.
-4. Simpan gambar asli dengan rasio aspek yang benar, teks alternatif bermakna, dan keterangan/sumber bila tersedia. Diagram kompleks memerlukan penjelasan tekstual yang memadai, bukan hanya alt berupa “gambar”. Jangan meregangkan atau memangkas bagian informatif.
+4. Simpan gambar asli dengan rasio aspek yang benar, teks alternatif bermakna, dan keterangan isi gambar. Asal halaman/sumber PDF dicatat sebagai komentar kode, tidak di keterangan yang tampil (keputusan pemilik 2026-11-26). Diagram kompleks memerlukan penjelasan tekstual yang memadai, bukan hanya alt berupa “gambar”. Jangan meregangkan atau memangkas bagian informatif.
 5. Jika diagram perlu dibuat ulang, pertahankan label, arah panah, hubungan, legenda, nilai, dan makna warna; jangan mengarang elemen. Gunakan komponen responsif yang dapat digunakan ulang, dengan CSS yang benar-benar ditambahkan dan diuji. Ketidakjelasan sumber harus ditandai, bukan ditebak.
 6. Jangan menyalin font PDF yang sangat kecil, posisi absolut setiap elemen, pemisah halaman buatan, atau kanvas berdimensi tetap. Ubah tata letak menjadi aliran HTML responsif: paragraf, heading, daftar, tabel, dan kelompok konsep sesuai maknanya.
 7. Tabel tetap tabel dan kutipan tetap kutipan. Jika elemen perlu digulir untuk menjaga keterbacaan, batasi gulir pada elemen itu; jangan mengecilkan seluruh halaman hingga teks tidak terbaca.

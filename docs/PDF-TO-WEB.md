@@ -12,7 +12,7 @@ PDF adalah representasi halaman, bukan struktur presentasi asli. Satu diagram mu
 | --- | --- |
 | Judul, paragraf, daftar, pertanyaan | HTML semantik, tetap lengkap dan bisa disalin/dicari |
 | Tabel | Tabel HTML dengan judul kolom/baris, satuan, catatan, dan pembungkus scroll |
-| Foto/ilustrasi | Aset lokal asli bila bisa diekstrak; sertakan alt, caption, kredit/sumber |
+| Foto/ilustrasi | Aset lokal asli bila bisa diekstrak; sertakan alt dan caption isi gambar; asal halaman/kredit dicatat di komentar kode dan audit, tidak di tampilan |
 | Grafik/diagram kompleks | Ekstrak bila utuh; jika tidak, render/crop halaman atau rekonstruksi terverifikasi, disertai penjelasan HTML |
 | Rumus | Pertahankan simbol, indeks, satuan, dan nomor; gunakan markup sederhana bila memadai atau visual terverifikasi plus penjelasan teks. Jangan menambah pustaka matematika tanpa kebutuhan yang jelas |
 | Kutipan, daftar pustaka, catatan kaki | Teks dan tautan yang terjaga hubungannya dengan materi |
@@ -113,6 +113,8 @@ Sanitasi SVG/HTML yang diambil dari sumber; jangan memasukkan script, handler, a
 - Path di `content` dihitung dari halaman portal utama `index.html`, bukan dari lokasi `meetings.js`. Gunakan `assets/media/...`, bukan `../../../assets/...` atau `/assets/...`.
 - Teks HTML di dalam template literal JavaScript perlu penanganan backtick dan `${...}` literal agar tidak menjadi sintaks/interpolasi tak sengaja. Periksa dengan `node --check`.
 - `content` dirender sebagai HTML: hanya masukkan markup yang ditulis/ditinjau sebagai konten tepercaya, bukan HTML mentah hasil ekstraksi yang belum diperiksa.
+
+**Tampilan profesional:** halaman tidak menampilkan sumber/halaman PDF, kata “slide/presentasi”, catatan konversi, nama kelompok, atau slide sampul/anggota/penutup/tanya jawab (keputusan pemilik 2026-11-26). Simpan semua itu sebagai komentar `<!-- … -->` di `content` atau komentar `//` di data, dan di audit.
 
 **Komponen gambar:** `main.css` menyediakan `.lesson-figure`, `.figure-grid`, `.figure-description`, dan `.source-note` (ditambahkan dan diuji pada konversi Komunikasi Persuasif, termasuk aturan cetak). Belum ada komponen diagram interaktif; jangan mengklaimnya tersedia.
 
